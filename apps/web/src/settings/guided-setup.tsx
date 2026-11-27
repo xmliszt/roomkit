@@ -1,7 +1,7 @@
 import type { InstallTarget } from "@planner/shared/src/jobs/install-target-schema.ts";
 import type { InstallJob } from "@planner/shared/src/jobs/job-schema.ts";
 import type { Preflight } from "@planner/shared/src/preflight/preflight-schema.ts";
-import { useId, useState } from "react";
+import { type ReactNode, useId, useState } from "react";
 import { renderMessageParts } from "../i18n/render-message-parts.tsx";
 import { useAppLanguage } from "../i18n/use-app-language.ts";
 import { RowButton } from "../pages-ui/row-button.tsx";
@@ -18,6 +18,13 @@ type GuidedSetupProps = {
   initialChoice: SetupChoice | undefined;
   disabled: boolean;
   jobs: InstallJob[];
+  local: boolean;
+  loginStarted: "claude" | "codex" | undefined;
+  renderSignIn: (options: {
+    cli: "claude" | "codex";
+    disabled: boolean;
+    section: "setup";
+  }) => ReactNode;
   onInstallStarted: (targets: InstallTarget[]) => void;
   onCheckAgain: () => void;
 };
@@ -33,7 +40,6 @@ export function GuidedSetup(props: GuidedSetupProps) {
   const session = usePlannerSession();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string>();
-  const [loginStarted, setLoginStarted] = useState<"claude" | "codex">();
   const preflight = props.preflight;
   const device = preflight?.device;
   const missing = preflight
@@ -64,9 +70,6 @@ export function GuidedSetup(props: GuidedSetupProps) {
   );
   const setupFailure = props.jobs.find((job) => job.stage === "failed");
   const isBlocked = props.disabled || isSubmitting || isRunning;
-  const isLocal =
-    typeof window !== "undefined" &&
-    ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
 
   function gigabytes(bytes: number) {
     return t("setup.gb", { amount: decimal.format(bytes / 1e9) });
@@ -75,7 +78,6 @@ export function GuidedSetup(props: GuidedSetupProps) {
   async function start(targets: InstallTarget[]) {
     setIsSubmitting(true);
     setError(undefined);
-    setLoginStarted(undefined);
     try {
       const ack = await session.command({
         type: "install.batch.start",
@@ -83,24 +85,6 @@ export function GuidedSetup(props: GuidedSetupProps) {
       });
       if (!ack.ok) throw new Error(ack.error);
       props.onInstallStarted(targets);
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : String(caught));
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
-
-  async function signIn(cli: "claude" | "codex") {
-    setError(undefined);
-    setLoginStarted(undefined);
-    setIsSubmitting(true);
-    try {
-      const ack = await session.command(
-        { type: "agent.login", cli },
-        { timeoutMs: 15000 },
-      );
-      if (!ack.ok) throw new Error(ack.error);
-      setLoginStarted(cli);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : String(caught));
     } finally {
@@ -189,8 +173,8 @@ export function GuidedSetup(props: GuidedSetupProps) {
                     <span>{label}</span>
                     {agent?.status === "sign-in" ? (
                       <span className="text-ink-dim">
-                        {isLocal
-                          ? loginStarted === agent.cli
+                        {props.local
+                          ? props.loginStarted === agent.cli
                             ? t("setup.finishSignIn")
                             : t("setup.signInOnMac")
                           : renderMessageParts({
@@ -221,14 +205,12 @@ export function GuidedSetup(props: GuidedSetupProps) {
                     )}
                   </div>
                   {agent?.status === "sign-in" ? (
-                    isLocal ? (
-                      <RowButton
-                        label={t("setup.signInTo", { tool: label })}
-                        disabled={isBlocked}
-                        onClick={() => void signIn(agent.cli)}
-                      >
-                        {t("setup.signIn")}
-                      </RowButton>
+                    props.local ? (
+                      props.renderSignIn({
+                        cli: agent.cli,
+                        disabled: isBlocked,
+                        section: "setup",
+                      })
                     ) : (
                       <RowButton
                         disabled={props.disabled}

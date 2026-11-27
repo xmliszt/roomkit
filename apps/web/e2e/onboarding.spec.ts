@@ -1,6 +1,8 @@
 import { renameSync, rmSync } from "node:fs";
 import { join } from "node:path";
+import { PreflightSchema } from "@planner/shared/src/preflight/preflight-schema.ts";
 import { ProjectSchema } from "@planner/shared/src/project/project-schema.ts";
+import { ClientCommandSchema } from "@planner/shared/src/protocol/client-command-schema.ts";
 import { ItemSchema } from "@planner/shared/src/scene/item-schema.ts";
 import { expect, type Page, test } from "@playwright/test";
 import { sendDaemonCommand } from "../../../e2e/send-daemon-command.ts";
@@ -339,6 +341,93 @@ test("installs a missing chat agent and resumes the chair exercise", async ({
     rmSync(executable, { force: true });
     renameSync(parkedExecutable, executable);
   }
+});
+
+test("starts and retries Codex sign-in from the setup guide and Agents", async ({
+  page,
+}) => {
+  const preflight = PreflightSchema.parse(
+    await sendDaemonCommand({ type: "preflight.check", force: true }),
+  );
+  const signedOut = {
+    ...preflight,
+    agents: preflight.agents.map((agent) =>
+      agent.cli === "codex" ? { ...agent, status: "sign-in" } : agent,
+    ),
+  };
+  const logins: string[] = [];
+  let isSignedIn = false;
+  let canOpenTerminal = false;
+  await page.routeWebSocket(
+    `ws://127.0.0.1:${process.env.PLANNER_PORT ?? "4820"}/**`,
+    (socket) => {
+      const server = socket.connectToServer();
+      socket.onMessage((raw) => {
+        const command = ClientCommandSchema.safeParse(JSON.parse(String(raw)));
+        if (!command.success) return server.send(raw);
+        const { data } = command;
+        if (data.type === "agent.login") logins.push(data.cli);
+        else if (data.type !== "preflight.check") return server.send(raw);
+        if (data.type === "agent.login" && !canOpenTerminal) {
+          socket.send(
+            JSON.stringify({
+              type: "command.ack",
+              ok: false,
+              requestId: data.requestId,
+              error: "Could not open Terminal.",
+            }),
+          );
+          return;
+        }
+        socket.send(
+          JSON.stringify({
+            type: "command.ack",
+            ok: true,
+            requestId: data.requestId,
+            result:
+              data.type === "preflight.check"
+                ? isSignedIn
+                  ? preflight
+                  : signedOut
+                : {},
+          }),
+        );
+      });
+    },
+  );
+
+  await page.goto("/settings?feature=codex#setup");
+  for (const section of [page.locator("#setup"), page.locator("#agents")]) {
+    canOpenTerminal = false;
+    const signIn = section.getByRole("button", { name: "Sign in to Codex" });
+    await expect(signIn).toBeEnabled();
+    await signIn.press("Enter");
+    const error = section.getByRole("alert");
+    await expect(error).toContainText("Could not open Terminal.");
+    canOpenTerminal = true;
+    await signIn.press("Enter");
+    await expect(error).toHaveCount(0);
+    await expect(
+      section.getByText("Complete sign-in, then select Check again."),
+    ).toBeVisible();
+  }
+  await expect.poll(() => logins).toEqual(["codex", "codex", "codex", "codex"]);
+  await expect(page.locator("#agents").getByText("codex login")).toHaveCount(0);
+
+  isSignedIn = true;
+  const checkAgain = page.getByRole("button", {
+    name: "check again",
+    exact: true,
+  });
+  await checkAgain.click();
+  await expect(
+    page.getByRole("button", { name: "Use Codex for all roles" }),
+  ).toBeVisible();
+  isSignedIn = false;
+  await checkAgain.click();
+  await expect(
+    page.locator("#setup").getByText("Sign in on this Mac to connect."),
+  ).toBeVisible();
 });
 
 test("checks this Mac and installs selected photo tools", async ({ page }) => {

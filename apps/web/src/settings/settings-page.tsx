@@ -55,6 +55,14 @@ type SettingsError =
       detail: string;
     };
 
+type SignInLocation = {
+  cli: "claude" | "codex";
+  section: "setup" | "agents";
+};
+
+type SignInResult = SignInLocation &
+  ({ kind: "started" } | { kind: "failed"; detail: string });
+
 export function SettingsPage(props: SettingsPageProps) {
   const { locale, t } = useAppLanguage();
   const pathId = useId();
@@ -72,6 +80,7 @@ export function SettingsPage(props: SettingsPageProps) {
   const jobs = useStore(session.stores.jobs, (state) => state.jobs);
   const [copiedCommand, setCopiedCommand] = useState<string>();
   const [error, setError] = useState<SettingsError>();
+  const [signInResult, setSignInResult] = useState<SignInResult>();
   const [isChecking, setIsChecking] = useState(false);
   const [isActing, setIsActing] = useState(false);
   const [checkAttempt, setCheckAttempt] = useState(0);
@@ -97,6 +106,11 @@ export function SettingsPage(props: SettingsPageProps) {
     .map(([, job]) => job);
   const roles: Role[] = ["surveyor", "modeler", "designer"];
   const disabled = connection !== "open" || isActing;
+  const loginStarted =
+    signInResult?.kind === "started" ? signInResult.cli : undefined;
+  const isLocal =
+    typeof window !== "undefined" &&
+    ["localhost", "127.0.0.1", "[::1]"].includes(window.location.hostname);
   const isAgentSetup =
     props.initialChoice === "claude" || props.initialChoice === "codex";
   useEffect(() => {
@@ -112,9 +126,15 @@ export function SettingsPage(props: SettingsPageProps) {
       .then((ack) => {
         if (!active) return;
         if (!ack.ok) throw new Error(ack.error);
-        session.stores.activity.setState({
-          preflight: PreflightSchema.parse(ack.result),
-        });
+        const checked = PreflightSchema.parse(ack.result);
+        session.stores.activity.setState({ preflight: checked });
+        setSignInResult((current) =>
+          checked.agents.some(
+            (agent) => agent.cli === current?.cli && agent.status === "ready",
+          )
+            ? undefined
+            : current,
+        );
       })
       .catch((caught: unknown) => {
         if (active)
@@ -141,6 +161,56 @@ export function SettingsPage(props: SettingsPageProps) {
     } catch {
       setError({ kind: "clipboard" });
     }
+  }
+
+  async function signIn(location: SignInLocation) {
+    setIsActing(true);
+    setSignInResult(undefined);
+    try {
+      const ack = await session.command(
+        { type: "agent.login", cli: location.cli },
+        { timeoutMs: 15000 },
+      );
+      if (!ack.ok) throw new Error(ack.error);
+      setSignInResult({ ...location, kind: "started" });
+    } catch (caught) {
+      setSignInResult({
+        ...location,
+        kind: "failed",
+        detail: caught instanceof Error ? caught.message : String(caught),
+      });
+    } finally {
+      setIsActing(false);
+    }
+  }
+
+  function renderSignIn(options: SignInLocation & { disabled: boolean }) {
+    const failure =
+      signInResult?.kind === "failed" &&
+      signInResult.cli === options.cli &&
+      signInResult.section === options.section
+        ? signInResult.detail
+        : undefined;
+    return (
+      <div className="min-w-0">
+        <RowButton
+          label={t("setup.signInTo", {
+            tool: options.cli === "claude" ? "Claude Code" : "Codex",
+          })}
+          disabled={options.disabled}
+          onClick={() =>
+            void signIn({ cli: options.cli, section: options.section })
+          }
+        >
+          {t("setup.signIn")}
+        </RowButton>
+        {failure !== undefined && (
+          <p role="alert" className="break-words text-danger">
+            {t("settings.actionFailed", { detail: failure })}
+          </p>
+        )}
+      </div>
+    );
   }
 
   async function install(target: InstallTarget) {
@@ -287,6 +357,9 @@ export function SettingsPage(props: SettingsPageProps) {
             : t(error.key, { detail: error.detail })}
         </p>
       )}
+      <output className="sr-only">
+        {loginStarted && t("setup.finishSignIn")}
+      </output>
       <SettingsLanguage />
       <GuidedSetup
         sectionId="setup"
@@ -295,6 +368,9 @@ export function SettingsPage(props: SettingsPageProps) {
         initialChoice={props.initialChoice}
         disabled={disabled || isChecking}
         jobs={guidedJobs}
+        local={isLocal}
+        loginStarted={loginStarted}
+        renderSignIn={renderSignIn}
         onInstallStarted={(targets) =>
           setGuideTargetKeys(targets.map((target) => JSON.stringify(target)))
         }
@@ -346,6 +422,14 @@ export function SettingsPage(props: SettingsPageProps) {
                       {agent?.usage?.plan ?? t("settings.planUnavailable")}
                     </p>
                     {agent?.status === "sign-in" &&
+                      isLocal &&
+                      renderSignIn({
+                        cli: agent.cli,
+                        disabled: disabled || isChecking,
+                        section: "agents",
+                      })}
+                    {agent?.status === "sign-in" &&
+                      !isLocal &&
                       (() => {
                         const command =
                           cli === "claude"
@@ -387,7 +471,10 @@ export function SettingsPage(props: SettingsPageProps) {
                       )}
                     {agent && agent.status !== "ready" && (
                       <p className="text-ink-dim">
-                        {translateAgentDiagnostic({ agent, t })}
+                        {agent.status === "sign-in" &&
+                        loginStarted === agent.cli
+                          ? t("setup.finishSignIn")
+                          : translateAgentDiagnostic({ agent, t })}
                       </p>
                     )}
                   </div>
