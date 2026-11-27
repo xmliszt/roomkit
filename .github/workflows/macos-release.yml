@@ -99,7 +99,7 @@ jobs:
           SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
         run: |
           node desktop/publish-macos-release.mjs prepare dist/signed "$RUNNER_TEMP/roomkit-sparkle/bin/generate_appcast"
-      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: Roomkit-${{ inputs.version }}-macOS-arm64
           path: |
