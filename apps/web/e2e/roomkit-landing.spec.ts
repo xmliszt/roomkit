@@ -695,6 +695,41 @@ test("reduced motion stops the remote signal and finishes the workflow reveal", 
   await expect.poll(readResponse).toBe(1);
 });
 
+test("the footer reveals its letters from left to right and honors reduced motion", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.route("**/room-preview.js", (route) => route.abort());
+  await page.goto(landingUrl);
+
+  const wordmark = page.locator(".footer-wordmark");
+  const letters = wordmark.locator(".footer-wordmark-text > span");
+  await expect(letters.first()).toHaveCSS("opacity", "0");
+  await wordmark.evaluate((element) =>
+    element.scrollIntoView({ behavior: "instant", block: "end" }),
+  );
+
+  await expect
+    .poll(() =>
+      letters.evaluateAll((nodes) => {
+        const opacities = nodes.map((node) =>
+          Number(getComputedStyle(node).opacity),
+        );
+        return (
+          opacities.some((opacity) => opacity > 0) &&
+          opacities.at(0) === Math.max(...opacities) &&
+          opacities.at(-1) === 0
+        );
+      }),
+    )
+    .toBe(true);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect(letters.last()).toHaveCSS("opacity", "1");
+  await expect(letters.last()).toHaveCSS("transform", "none");
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await expect(letters.first()).toHaveCSS("opacity", "1");
+});
+
 test("the footer opens the app tray and closing it restores focus", async ({
   page,
 }) => {
@@ -722,6 +757,7 @@ test("the footer opens the app tray and closing it restores focus", async ({
   expect(await footer.boundingBox()).toEqual(footerBounds);
   await expect(dialog.getByRole("link")).toHaveCount(5);
   const paws = dialog.getByRole("link", { name: "Paws", exact: true });
+  await expect(paws).toHaveCSS("font-size", "13.5px");
   await expect(paws).toHaveAttribute("target", "_blank");
   await expect(paws).toBeFocused();
 

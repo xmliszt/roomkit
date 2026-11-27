@@ -20,6 +20,13 @@ const globeTurn = { duration: 0.56, ease: [0.32, 0, 0.24, 1] };
 const signalTravel = { duration: 2.45, ease: "linear" };
 const signalVisibility = 0.45;
 const iconTransition = { type: "spring", duration: 0.3, bounce: 0 };
+const footerVisibility = 0.2;
+const footerLetterEntrance = { opacity: [0, 1], y: ["35%", "0%"] };
+const footerLetterTransition = {
+  delay: stagger(0.06),
+  y: { type: "spring", stiffness: 190, damping: 22 },
+  opacity: { duration: 0.24, ease: "easeOut" },
+};
 
 function subscribeToMotionPreference(callback) {
   motionPreference.addEventListener("change", callback);
@@ -157,6 +164,39 @@ function observeCopyFeedback() {
   };
 }
 
+function observeFooterWordmark() {
+  const wordmark = document.querySelector(".footer-wordmark");
+  if (wordmark.dataset.reveal === "played") return;
+
+  const letters = wordmark.querySelectorAll(".footer-wordmark-text > span");
+  let playback;
+  function finishReveal() {
+    wordmark.dataset.reveal = "played";
+  }
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.intersectionRatio < footerVisibility) return;
+      observer.disconnect();
+      playback = animate(letters, footerLetterEntrance, footerLetterTransition);
+      playback.then(finishReveal);
+    },
+    { threshold: footerVisibility },
+  );
+  wordmark.dataset.reveal = "waiting";
+  observer.observe(wordmark);
+
+  return () => {
+    observer.disconnect();
+    if (playback) {
+      playback.complete();
+      finishReveal();
+    } else {
+      delete wordmark.dataset.reveal;
+    }
+  };
+}
+
 function LandingMotion() {
   const [scope, animateChapter] = useAnimate();
   const initialized = useRef(false);
@@ -174,9 +214,10 @@ function LandingMotion() {
       observeGlobeHover(isFirstAttachment),
       observeRemoteSignal(),
       observeCopyFeedback(),
+      observeFooterWordmark(),
     ];
     return () => {
-      for (const cleanup of stop) cleanup();
+      for (const cleanup of stop) cleanup?.();
     };
   }, [animateChapter, reduced]);
 
