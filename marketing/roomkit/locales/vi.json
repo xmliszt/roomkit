@@ -79,7 +79,7 @@
   "close": "Đóng",
   "compareValue": "Ảnh chụp {snapshot}%, ảnh kết xuất {render}%",
   "setupIntro": "Cần máy Mac dùng chip Apple, Git, {node} và {pnpm}.",
-  "webProject": "Mở {localhost}. Trong {newProject}, nhập kích thước phòng rồi chọn {create}.",
+  "webProject": "Mở {localhost} và chọn cùng ngôn ngữ với trang này trong Roomkit. Trong {newProject}, nhập kích thước phòng rồi chọn {create}.",
   "photoToolsIntro": "Cài {homebrew} và đăng nhập vào {claude} hoặc {codex}. Trong {photoSettings}, thiết lập {blender} và {rebuildPhotos}. MapAnything sử dụng khoảng 4,9 GB.",
   "startPhotos": "Chọn {startFromPhotos}.",
   "connectIntro": "Cài {tailscale} trên cả hai thiết bị và đăng nhập vào cùng một tailnet. Cài phần tích hợp dòng lệnh trong phần cài đặt của ứng dụng Mac độc lập. Bật {magicDns} và {httpsCertificates} trong cài đặt DNS của tailnet.",

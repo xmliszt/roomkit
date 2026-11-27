@@ -79,7 +79,7 @@
   "close": "Sluiten",
   "compareValue": "{snapshot}% momentopname, {render}% render",
   "setupIntro": "Vereist een Mac met Apple silicon, Git, {node} en {pnpm}.",
-  "webProject": "Open {localhost}. Voer onder {newProject} de afmetingen van de kamer in en kies {create}.",
+  "webProject": "Open {localhost} en kies in Roomkit dezelfde taal als op deze pagina. Voer onder {newProject} de kamerafmetingen in en kies {create}.",
   "photoToolsIntro": "Installeer {homebrew} en meld je aan bij {claude} of {codex}. Stel onder {photoSettings} de opties {blender} en {rebuildPhotos} in. MapAnything gebruikt ongeveer 4,9 GB.",
   "startPhotos": "Kies {startFromPhotos}.",
   "connectIntro": "Installeer {tailscale} op beide apparaten en meld je aan bij dezelfde tailnet. Installeer de opdrachtregelintegratie in de instellingen van de zelfstandige Mac-app. Schakel {magicDns} en {httpsCertificates} in via de DNS-instellingen van je tailnet.",

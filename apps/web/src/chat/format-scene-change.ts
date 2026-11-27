@@ -60,6 +60,17 @@ export function formatSceneChange(options: {
   t: MessageTranslator;
 }) {
   const { change, locale, t } = options;
+  if (
+    change.label === "Room" &&
+    change.before === "Previous room" &&
+    change.after === "Reconstructed room"
+  ) {
+    return {
+      label: t("editor.room-panel.room"),
+      before: t("chat.reconstruction.previous-room"),
+      after: t("chat.reconstruction.reconstructed-room"),
+    };
+  }
   const separator = change.label.lastIndexOf(" · ");
   if (separator < 0) return change;
   const owner = change.label.slice(0, separator);

@@ -11,6 +11,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { applyCommand } from "@planner/shared/src/commands/apply-command.ts";
 import type { Command } from "@planner/shared/src/commands/command-schema.ts";
+import type { AppLocale } from "@planner/shared/src/i18n/app-locale.ts";
 import { ProjectIdSchema } from "@planner/shared/src/project/project-id-schema.ts";
 import type {
   Project,
@@ -238,11 +239,17 @@ export function createProjectStore(options: {
       };
       return saveNewProject({ project });
     },
-    openSampleProject(resetProjectId: string | undefined) {
+    openSampleProject(
+      input: {
+        resetProjectId?: string | undefined;
+        locale?: AppLocale | undefined;
+      } = {},
+    ) {
       const sample = listProjects().find((project) => project.sample);
-      if (sample && sample.id !== resetProjectId) return loadProject(sample.id);
+      if (sample && sample.id !== input.resetProjectId)
+        return loadProject(sample.id);
       return saveNewProject({
-        project: createSampleProject(),
+        project: createSampleProject(input.locale),
         replaceProjectId: sample?.id,
       });
     },

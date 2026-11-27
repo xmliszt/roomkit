@@ -1143,6 +1143,14 @@ test("Simplified Chinese uses the interactive hero and copies verbatim commands"
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(`${landingUrl}zh-Hans/`);
   await expect(page).toHaveTitle("Roomkit — Mac 版 3D 房间设计工具");
+  await expect(
+    page.locator("#source-setup").getByText("新建项目", { exact: true }),
+  ).toBeAttached();
+  await expect(
+    page
+      .locator("#source-setup")
+      .getByText("设置 AI 和照片工具", { exact: true }),
+  ).toBeAttached();
   const canvas = page.locator("#room-preview[data-ready] canvas");
   await expect(canvas).toHaveAccessibleName(/可交互的 3D 客厅/);
   await expect(canvas).toBeVisible();

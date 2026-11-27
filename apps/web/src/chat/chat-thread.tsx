@@ -125,6 +125,14 @@ export function ChatThread(props: ChatThreadProps) {
                     ])}
                     block={block}
                     actions={props.actions}
+                    surveyorJobId={
+                      message.author.kind === "agent" &&
+                      message.author.role === "surveyor" &&
+                      message.blocks[0]?.kind === "job" &&
+                      message.blocks[0].jobId === message.id
+                        ? message.id
+                        : undefined
+                    }
                   />
                 </div>
               ))}

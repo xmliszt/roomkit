@@ -17,6 +17,7 @@ import { formatToolPayload } from "./format-tool-payload.ts";
 import { getChatMediaUrl } from "./get-chat-media-url.ts";
 import { getMediaSrc } from "./get-media-src.ts";
 import { getNoticeText } from "./get-notice-text.ts";
+import { getReconstructionText } from "./get-reconstruction-text.ts";
 import { ItemBlock } from "./item-block.tsx";
 import { Markdown } from "./markdown.tsx";
 import { MediaBlock } from "./media-block.tsx";
@@ -26,26 +27,39 @@ type ChatBlockViewProps = {
   block: ChatBlock;
   actions: ChatActions;
   blockKey: string;
+  surveyorJobId: string | undefined;
 };
 
 export function ChatBlockView(props: ChatBlockViewProps) {
   const t = useMessages();
   const locale = useLocale();
   const session = usePlannerSession();
-  const jobId = props.block.kind === "job" ? props.block.jobId : undefined;
+  const jobId =
+    props.block.kind === "job" ? props.block.jobId : props.surveyorJobId;
   const job = useStore(session.stores.jobs, (state) =>
     jobId !== undefined && Object.hasOwn(state.jobs, jobId)
       ? state.jobs[jobId]
       : undefined,
   );
+  const isReconstruction =
+    props.surveyorJobId !== undefined &&
+    (job === undefined || job.kind === "reconstruction");
   const block = props.block;
   switch (block.kind) {
     case "render":
       return <RenderBlock block={block} projectId={props.actions.projectId} />;
     case "item":
       return <ItemBlock block={block} actions={props.actions} />;
-    case "text":
-      return <Markdown text={block.markdown} />;
+    case "text": {
+      const text = isReconstruction
+        ? getReconstructionText({ text: block.markdown, t })
+        : undefined;
+      return text === undefined ? (
+        <Markdown text={block.markdown} />
+      ) : (
+        <p dir="auto">{text}</p>
+      );
+    }
     case "image":
     case "video":
     case "file":
@@ -152,7 +166,13 @@ export function ChatBlockView(props: ChatBlockViewProps) {
         />
       );
     case "capture-request":
-      return <CaptureRequestBlock block={block} actions={props.actions} />;
+      return (
+        <CaptureRequestBlock
+          block={block}
+          actions={props.actions}
+          reconstruction={isReconstruction}
+        />
+      );
     case "choice":
       return (
         <div className="flex flex-col gap-y-2">
@@ -176,12 +196,15 @@ export function ChatBlockView(props: ChatBlockViewProps) {
           ))}
         </div>
       );
-    case "notice":
+    case "notice": {
+      const text = isReconstruction
+        ? getReconstructionText({ text: block.text, t })
+        : undefined;
       return (
         <output
           className={`flex flex-col gap-y-1 ${block.detail.kind === "error" ? "text-danger" : "text-ink-dim"}`}
         >
-          <p dir="auto">! {getNoticeText({ block, t })}</p>
+          <p dir="auto">! {text ?? getNoticeText({ block, t })}</p>
           {block.detail.kind === "usage-limit" && block.detail.resetAt && (
             <p>
               {t("chat.chat-block-view.resets")}{" "}
@@ -201,6 +224,7 @@ export function ChatBlockView(props: ChatBlockViewProps) {
             )}
         </output>
       );
+    }
     default: {
       const unreachable: never = block;
       return unreachable;

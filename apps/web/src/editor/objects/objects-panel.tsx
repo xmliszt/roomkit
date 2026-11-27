@@ -1,3 +1,4 @@
+import { CHARGING_PORT_TYPES } from "@planner/shared/src/catalog/charging-port-types.ts";
 import type { Job } from "@planner/shared/src/jobs/job-schema.ts";
 import type { ObjectsLibraryResult } from "@planner/shared/src/protocol/objects-library-result-schema.ts";
 import type { Item } from "@planner/shared/src/scene/item-schema.ts";
@@ -45,12 +46,6 @@ function getEntryItems(entry: Entry) {
   return entry.kind === "item" ? [entry.item] : entry.items;
 }
 
-function getEntryName(entry: Entry) {
-  return entry.kind === "item"
-    ? entry.item.name
-    : (entry.items.at(0)?.name ?? entry.object.name);
-}
-
 function getEntryKey(entry: Entry) {
   return entry.kind === "item"
     ? `item:${entry.item.id}`
@@ -79,6 +74,19 @@ function getRowState(options: { item: Item; job: Job | undefined }) {
 export function ObjectsPanel(props: ObjectsPanelProps) {
   const t = useMessages();
   const locale = useLocale();
+  function getEntryName(entry: Entry) {
+    if (entry.kind === "item") return entry.item.name;
+    const placed = entry.items.at(0);
+    if (placed) return placed.name;
+    const { object } = entry;
+    const socket =
+      object.builtIn && locale !== "en"
+        ? CHARGING_PORT_TYPES.find((type) => type.assetId === object.assetId)
+        : undefined;
+    return socket
+      ? t(`editor.charging-port.type.${socket.typeId}`)
+      : object.name;
+  }
   const library = props.library;
   const session = usePlannerSession();
   const jobs = useStore(session.stores.jobs, (state) => state.jobs);
