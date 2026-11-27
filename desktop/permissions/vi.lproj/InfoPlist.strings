@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "Roomkit sử dụng micrô khi bạn đọc tin nhắn để nhập vào ô soạn thảo trong cuộc trò chuyện.";
+"NSSpeechRecognitionUsageDescription" = "Roomkit sử dụng tính năng nhận dạng giọng nói của Apple để chuyển lời bạn đọc thành văn bản trong ô soạn thảo.";

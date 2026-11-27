@@ -1,0 +1,16 @@
+{
+  "id": "sample-chair",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 0.786184,
+    "height": 0.829119,
+    "depth": 0.760905
+  },
+  "mount": "floor",
+  "triangleCount": 10968,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "roomkit-sample",
+    "sourcePhotoIds": []
+  }
+}

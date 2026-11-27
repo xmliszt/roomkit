@@ -1,0 +1,16 @@
+{
+  "id": "charging-port-type-c-f",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 0.0807,
+    "height": 0.0807,
+    "depth": 0.011
+  },
+  "mount": "wall",
+  "triangleCount": 2198,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "procedural",
+    "sourcePhotoIds": []
+  }
+}

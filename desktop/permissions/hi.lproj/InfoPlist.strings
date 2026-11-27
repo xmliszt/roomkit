@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "जब आप चैट में बोलकर संदेश लिखते हैं, तब Roomkit आपके माइक्रोफ़ोन का इस्तेमाल करता है।";
+"NSSpeechRecognitionUsageDescription" = "Roomkit, Apple की वाक् पहचान सुविधा से आपके बोले हुए शब्दों को चैट में टेक्स्ट में बदलता है।";

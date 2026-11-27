@@ -1,0 +1,167 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>S2 stage</title>
+<style>
+  html, body { margin: 0; background: #f4f1ea; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+  { "imports": { "three": "/three/build/three.module.js", "three/addons/": "/three/examples/jsm/" } }
+</script>
+<canvas></canvas>
+<script type="module">
+  import * as THREE from 'three'
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+  import { createStage } from '/here/stage.js'
+
+  const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('canvas'), antialias: true, preserveDrawingBuffer: true })
+  const stage = createStage(renderer)
+  const loader = new GLTFLoader()
+
+  window.inspectGlb = async function inspectGlb(url) {
+    const gltf = await loader.loadAsync(url)
+    gltf.scene.updateMatrixWorld(true)
+    const box = new THREE.Box3().setFromObject(gltf.scene)
+    const size = box.getSize(new THREE.Vector3())
+    const footprint = []
+    let triangles = 0
+    const textures = []
+    gltf.scene.traverse((node) => {
+      if (!node.isMesh) return
+      const geometry = node.geometry
+      triangles += (geometry.index ? geometry.index.count : geometry.attributes.position.count) / 3
+      const position = geometry.attributes.position
+      const step = Math.max(1, Math.floor(position.count / 20000))
+      const vertex = new THREE.Vector3()
+      for (let index = 0; index < position.count; index += step) {
+        vertex.fromBufferAttribute(position, index).applyMatrix4(node.matrixWorld)
+        footprint.push([vertex.x, vertex.y, vertex.z])
+      }
+      const materials = Array.isArray(node.material) ? node.material : [node.material]
+      for (const material of materials) {
+        for (const key of ['map', 'normalMap', 'roughnessMap', 'metalnessMap', 'aoMap', 'emissiveMap']) {
+          const image = material[key]?.image
+          if (image) textures.push({ key, width: image.width, height: image.height })
+        }
+      }
+    })
+    return { size: [size.x, size.y, size.z], min: [box.min.x, box.min.y, box.min.z], triangles, textures, points: footprint }
+  }
+
+  window.shoot = async function shoot(options) {
+    renderer.setSize(options.widthPx, options.heightPx, false)
+    stage.camera.aspect = options.widthPx / options.heightPx
+    const gltf = await loader.loadAsync(options.url)
+    if (options.yawDeg) gltf.scene.rotation.y = THREE.MathUtils.degToRad(options.yawDeg)
+    const { centre, radius, box } = stage.show(gltf.scene, options.mount)
+    stage.setEnvironment(options.environment)
+    stage.frame({ centre, radius, box, azimuthDeg: options.azimuthDeg, elevationDeg: options.elevationDeg, zoomOut: 1.05 })
+    renderer.render(stage.scene, stage.camera)
+  }
+  const INK = new THREE.Color('#2b2a27')
+  const PAPER = new THREE.Color('#f4f1ea')
+
+  function blueprintScene(object) {
+    const scene = new THREE.Scene()
+    scene.background = PAPER
+    const fill = new THREE.MeshBasicMaterial({ color: PAPER, side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 })
+    object.traverse((node) => {
+      if (node.isMesh) node.material = fill
+    })
+    scene.add(object)
+    return scene
+  }
+
+  function screenSpaceEdges(scene, camera, widthPx, heightPx, offsetPx) {
+    const target = new THREE.WebGLRenderTarget(widthPx, heightPx, { type: THREE.HalfFloatType })
+    target.depthTexture = new THREE.DepthTexture(widthPx, heightPx)
+    scene.overrideMaterial = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide })
+    renderer.setRenderTarget(target)
+    renderer.render(scene, camera)
+    renderer.setRenderTarget(null)
+    scene.overrideMaterial = null
+    const quad = new THREE.Mesh(
+      new THREE.PlaneGeometry(2, 2),
+      new THREE.ShaderMaterial({
+        uniforms: {
+          normals: { value: target.texture },
+          depth: { value: target.depthTexture },
+          texel: { value: new THREE.Vector2(offsetPx / widthPx, offsetPx / heightPx) },
+          near: { value: camera.near },
+          far: { value: camera.far },
+          ink: { value: INK },
+          paper: { value: PAPER },
+        },
+        vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+        fragmentShader: `
+          uniform sampler2D normals; uniform sampler2D depth; uniform vec2 texel; uniform float near; uniform float far;
+          uniform vec3 ink; uniform vec3 paper; varying vec2 vUv;
+          float linearDepth(vec2 uv) { float z = texture2D(depth, uv).x * 2.0 - 1.0; return 2.0 * near * far / (far + near - z * (far - near)); }
+          void main() {
+            vec3 n = texture2D(normals, vUv).xyz * 2.0 - 1.0;
+            float d = linearDepth(vUv);
+            float edge = 0.0;
+            vec2 offsets[4] = vec2[](vec2(texel.x, 0.0), vec2(-texel.x, 0.0), vec2(0.0, texel.y), vec2(0.0, -texel.y));
+            for (int i = 0; i < 4; i++) {
+              vec2 uv = vUv + offsets[i];
+              float dn = linearDepth(uv);
+              vec3 nn = texture2D(normals, uv).xyz * 2.0 - 1.0;
+              if (abs(dn - d) > 0.02 * min(d, dn)) edge = 1.0;
+              if (d < far * 0.99 && dot(n, nn) < 0.866) edge = 1.0;
+            }
+            gl_FragColor = vec4(mix(paper, ink, edge), 1.0);
+            #include <colorspace_fragment>
+          }`,
+      }),
+    )
+    const post = new THREE.Scene()
+    post.add(quad)
+    renderer.render(post, new THREE.Camera())
+  }
+
+  window.lines = async function lines(options) {
+    const { Line2 } = await import('three/addons/lines/Line2.js')
+    const { LineGeometry } = await import('three/addons/lines/LineGeometry.js')
+    const { LineMaterial } = await import('three/addons/lines/LineMaterial.js')
+    const dpr = window.devicePixelRatio
+    renderer.setPixelRatio(dpr)
+    renderer.setSize(options.widthPx, options.heightPx, false)
+    renderer.toneMapping = THREE.NoToneMapping
+    stage.camera.aspect = options.widthPx / options.heightPx
+    const gltf = await loader.loadAsync(options.url)
+    const { centre, radius, box } = stage.show(gltf.scene, 'floor')
+    stage.frame({ centre, radius, box, azimuthDeg: options.azimuthDeg, elevationDeg: options.elevationDeg, zoomOut: 1.05 })
+    const camera = stage.camera
+    const object = gltf.scene
+    stage.scene.remove(object)
+    const scene = blueprintScene(object)
+    const started = performance.now()
+    if (options.mode === 'edges-geometry') {
+      object.updateMatrixWorld(true)
+      const meshes = []
+      object.traverse((node) => node.isMesh && meshes.push(node))
+      for (const mesh of meshes) {
+        const segments = new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry, 30), new THREE.LineBasicMaterial({ color: INK }))
+        segments.matrixAutoUpdate = false
+        segments.matrix.copy(mesh.matrixWorld)
+        scene.add(segments)
+      }
+      renderer.render(scene, camera)
+    } else if (options.mode === 'proxy') {
+      const data = await (await fetch(options.linesUrl)).json()
+      const material = new LineMaterial({ color: INK, linewidth: 1, worldUnits: false })
+      material.resolution.set(options.widthPx, options.heightPx)
+      for (const polyline of data.polylines) {
+        const geometry = new LineGeometry()
+        geometry.setPositions(polyline.flat())
+        scene.add(new Line2(geometry, material))
+      }
+      renderer.render(scene, camera)
+    } else {
+      screenSpaceEdges(scene, camera, options.widthPx * dpr, options.heightPx * dpr, dpr / 2)
+    }
+    return { elapsedMs: performance.now() - started, dpr }
+  }
+
+  window.ready = true
+</script>

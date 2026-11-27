@@ -1,0 +1,159 @@
+name: Publish Roomkit for macOS
+run-name: Roomkit macOS ${{ inputs.version }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version such as 0.1.0
+        required: true
+        type: string
+      publish:
+        description: Publish the verified DMG, checksum, update feed and GitHub Release
+        default: true
+        type: boolean
+
+concurrency:
+  group: roomkit-macos-release
+  queue: max
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: macos-15
+    environment: macos-release
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build the unsigned DMG
+        env:
+          ROOMKIT_VERSION: ${{ inputs.version }}
+        run: desktop/build-dmg.sh
+      - name: Sign and notarize the DMG
+        shell: bash
+        env:
+          ROOMKIT_VERSION: ${{ inputs.version }}
+          ROOMKIT_SIGN_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          ROOMKIT_NOTARY_PROFILE: roomkit-release
+          APPLE_CERTIFICATE_P12_BASE64: ${{ secrets.APPLE_CERTIFICATE_P12_BASE64 }}
+          APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          APPLE_NOTARY_KEY_BASE64: ${{ secrets.APPLE_NOTARY_KEY_BASE64 }}
+          APPLE_NOTARY_KEY_ID: ${{ secrets.APPLE_NOTARY_KEY_ID }}
+          APPLE_NOTARY_ISSUER_ID: ${{ secrets.APPLE_NOTARY_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          : "${ROOMKIT_SIGN_IDENTITY:?Missing APPLE_SIGNING_IDENTITY}"
+          : "${APPLE_CERTIFICATE_P12_BASE64:?Missing APPLE_CERTIFICATE_P12_BASE64}"
+          : "${APPLE_CERTIFICATE_PASSWORD:?Missing APPLE_CERTIFICATE_PASSWORD}"
+          : "${APPLE_NOTARY_KEY_BASE64:?Missing APPLE_NOTARY_KEY_BASE64}"
+          : "${APPLE_NOTARY_KEY_ID:?Missing APPLE_NOTARY_KEY_ID}"
+          : "${APPLE_NOTARY_ISSUER_ID:?Missing APPLE_NOTARY_ISSUER_ID}"
+          umask 077
+          signing_dir="$(mktemp -d)"
+          keychain="$signing_dir/roomkit.keychain-db"
+          trap 'security delete-keychain "$keychain" 2>/dev/null || true; rm -rf "$signing_dir"' EXIT
+          keychain_password="$(openssl rand -hex 32)"
+          echo "::add-mask::$keychain_password"
+          printf '%s' "$APPLE_CERTIFICATE_P12_BASE64" | base64 -D > "$signing_dir/signing.p12"
+          printf '%s' "$APPLE_NOTARY_KEY_BASE64" | base64 -D > "$signing_dir/notary.p8"
+          security create-keychain -p "$keychain_password" "$keychain"
+          security set-keychain-settings -lut 3600 "$keychain"
+          security unlock-keychain -p "$keychain_password" "$keychain"
+          security import "$signing_dir/signing.p12" -k "$keychain" -P "$APPLE_CERTIFICATE_PASSWORD" -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$keychain_password" "$keychain" >/dev/null
+          security list-keychains -d user -s "$keychain"
+          xcrun notarytool store-credentials "$ROOMKIT_NOTARY_PROFILE" --keychain "$keychain"             --key "$signing_dir/notary.p8" --key-id "$APPLE_NOTARY_KEY_ID" --issuer "$APPLE_NOTARY_ISSUER_ID"
+          unlink "$signing_dir/signing.p12"
+          unlink "$signing_dir/notary.p8"
+          unset APPLE_CERTIFICATE_P12_BASE64 APPLE_CERTIFICATE_PASSWORD APPLE_NOTARY_KEY_BASE64
+          umask 022
+          dmg="Roomkit-$ROOMKIT_VERSION-arm64.dmg"
+          ROOMKIT_NOTARY_KEYCHAIN="$keychain" desktop/sign-dmg.sh "dist/$dmg" "dist/signed/$dmg"
+      - name: Smoke-test the signed release
+        shell: bash
+        env:
+          ROOMKIT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          dmg="Roomkit-$ROOMKIT_VERSION-arm64.dmg"
+          desktop/smoke-dmg.sh "dist/signed/$dmg"
+          (cd dist/signed && shasum -a 256 "$dmg" > "$dmg.sha256")
+      - name: Download Sparkle signing tools
+        run: |
+          mkdir -p "$RUNNER_TEMP/roomkit-sparkle"
+          desktop/download-sparkle.sh "$RUNNER_TEMP/roomkit-sparkle"
+      - name: Prepare and verify the Sparkle feed
+        env:
+          ROOMKIT_VERSION: ${{ inputs.version }}
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
+        run: |
+          node desktop/publish-macos-release.mjs prepare dist/signed "$RUNNER_TEMP/roomkit-sparkle/bin/generate_appcast"
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: Roomkit-${{ inputs.version }}-macOS-arm64
+          path: |
+            dist/signed/*.dmg
+            dist/signed/*.dmg.sha256
+            dist/signed/appcast.xml
+            dist/signed/macos-release.json
+          if-no-files-found: error
+          compression-level: 0
+
+  publish:
+    if: inputs.publish && github.ref == 'refs/heads/main'
+    needs: release
+    runs-on: ubuntu-24.04
+    environment: macos-release
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          name: Roomkit-${{ inputs.version }}-macOS-arm64
+          path: dist/signed
+      - name: Publish and verify the release
+        env:
+          ROOMKIT_VERSION: ${{ inputs.version }}
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+          VERCEL_BLOB_API_URL: https://blob.vercel-storage.com
+        run: node desktop/publish-macos-release.mjs publish dist/signed
+
+  publish-github:
+    if: inputs.publish && github.ref == 'refs/heads/main'
+    needs: publish
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131
+        with:
+          name: Roomkit-${{ inputs.version }}-macOS-arm64
+          path: dist/signed
+      - name: Publish the GitHub Release and tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ROOMKIT_VERSION: ${{ inputs.version }}
+        run: bash desktop/publish-github-release.sh dist/signed

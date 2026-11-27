@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+import { runFakeCli } from "./run-fake-cli.mjs";
+
+await runFakeCli({ kind: "claude" });

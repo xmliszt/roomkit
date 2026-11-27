@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleIdentifier</key>
+    <string>space.roomkit.app</string>
+    <key>CFBundleName</key>
+    <string>Roomkit</string>
+    <key>CFBundleDisplayName</key>
+    <string>Roomkit</string>
+    <key>CFBundleExecutable</key>
+    <string>Roomkit</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundleVersion</key>
+    <string>0.1.0</string>
+    <key>CFBundleIconFile</key>
+    <string>Roomkit</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>15.0</string>
+    <key>LSArchitecturePriority</key>
+    <array><string>arm64</string></array>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.graphics-design</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Roomkit uses your microphone when you dictate into the chat composer.</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>Roomkit uses Apple speech recognition to turn your dictation into text in the chat composer.</string>
+    <key>SUFeedURL</key>
+    <string>https://www.roomkit.space/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>UcYv/4BoU1LwqJSWyevFdLY9UxCudPIKir6Y7Rt3nmk=</string>
+    <key>SUEnableAutomaticChecks</key>
+    <true/>
+    <key>SUAllowsAutomaticUpdates</key>
+    <false/>
+    <key>SUVerifyUpdateBeforeExtraction</key>
+    <true/>
+    <key>SURequireSignedFeed</key>
+    <true/>
+</dict>
+</plist>

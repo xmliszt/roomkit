@@ -1,0 +1,249 @@
+{
+  "id": "00000000-0000-4000-8000-00000000000f",
+  "name": "Wall placement regression",
+  "revision": 0,
+  "scene": {
+    "version": 1,
+    "room": {
+      "walls": [
+        {
+          "id": "west",
+          "startM": {
+            "x": -3,
+            "z": -4
+          },
+          "kind": "solid"
+        },
+        {
+          "id": "north",
+          "startM": {
+            "x": -3,
+            "z": 4
+          },
+          "kind": "solid"
+        },
+        {
+          "id": "east",
+          "startM": {
+            "x": 3,
+            "z": 4
+          },
+          "kind": "solid"
+        },
+        {
+          "id": "south",
+          "startM": {
+            "x": 3,
+            "z": -4
+          },
+          "kind": "inferred"
+        }
+      ],
+      "ceilingHeightM": 3,
+      "surfaces": {}
+    },
+    "items": [
+      {
+        "id": "fixture-item-1",
+        "name": "Wall panel",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-1"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "west",
+          "alongM": 1.5,
+          "heightM": 1.4,
+          "rotationRad": 0
+        },
+        "sizeM": {
+          "width": 0.6,
+          "height": 0.8,
+          "depth": 0.05
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-2",
+        "name": "Sliding glass door",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-2"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "north",
+          "alongM": 3,
+          "heightM": 1.15,
+          "rotationRad": 0
+        },
+        "sizeM": {
+          "width": 2,
+          "height": 2.3,
+          "depth": 0.35
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-3",
+        "name": "Open doorway with wood frame",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-3"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "east",
+          "alongM": 4,
+          "heightM": 1.1,
+          "rotationRad": 0
+        },
+        "sizeM": {
+          "width": 1,
+          "height": 2.2,
+          "depth": 0.22
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-4",
+        "name": "Curtain",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-4"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "north",
+          "alongM": 4.5,
+          "heightM": 1.4,
+          "rotationRad": 0
+        },
+        "sizeM": {
+          "width": 0.7,
+          "height": 2,
+          "depth": 0.12
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-5",
+        "name": "Framed print",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-5"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "south",
+          "alongM": 2,
+          "heightM": 1.5,
+          "rotationRad": 0.2
+        },
+        "sizeM": {
+          "width": 0.4,
+          "height": 0.5,
+          "depth": 0.045
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-6",
+        "name": "Mirror",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-6"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "west",
+          "alongM": 4,
+          "heightM": 1.5,
+          "rotationRad": -0.12
+        },
+        "sizeM": {
+          "width": 0.8,
+          "height": 1.1,
+          "depth": 0.06
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-7",
+        "name": "Notice board",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-7"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "south",
+          "alongM": 4,
+          "heightM": 1.7,
+          "rotationRad": 0
+        },
+        "sizeM": {
+          "width": 1,
+          "height": 0.75,
+          "depth": 0.03
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-8",
+        "name": "Wall shelf",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-8"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "east",
+          "alongM": 6.5,
+          "heightM": 1.5,
+          "rotationRad": 0
+        },
+        "sizeM": {
+          "width": 0.7,
+          "height": 0.2,
+          "depth": 0.2
+        },
+        "locked": false
+      },
+      {
+        "id": "fixture-item-9",
+        "name": "Acoustic panel",
+        "model": {
+          "kind": "asset",
+          "assetId": "fixture-asset-9"
+        },
+        "placement": {
+          "kind": "wall",
+          "wallId": "west",
+          "alongM": 6,
+          "heightM": 1.4,
+          "rotationRad": 0
+        },
+        "sizeM": {
+          "width": 0.5,
+          "height": 1,
+          "depth": 0.07
+        },
+        "locked": false
+      }
+    ],
+    "camera": {
+      "positionM": {
+        "x": 6,
+        "y": 5,
+        "z": 7
+      },
+      "targetM": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      }
+    }
+  }
+}

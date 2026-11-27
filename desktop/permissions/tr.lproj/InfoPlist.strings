@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "Sohbette bir mesaj dikte ederken Roomkit mikrofonunuzu kullanır.";
+"NSSpeechRecognitionUsageDescription" = "Roomkit, dikte ettiğiniz içeriği sohbet alanında metne dönüştürmek için Apple’ın konuşma tanıma özelliğini kullanır.";

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.4/schema.json",
+  "files": {
+    "includes": [
+      "**",
+      "!docs",
+      "!python",
+      "!blender",
+      "!scripts/spikes",
+      "!roles",
+      "!**/dist",
+      "!**/.next",
+      "!**/next-env.d.ts",
+      "!**/node_modules",
+      "!.tmp",
+      "!test-results",
+      "!playwright-report"
+    ]
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  },
+  "linter": {
+    "rules": {
+      "recommended": true,
+      "style": {
+        "noEnum": "error"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "id": "charging-port-type-g-usb",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 0.086,
+    "height": 0.086,
+    "depth": 0.01
+  },
+  "mount": "wall",
+  "triangleCount": 1882,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "procedural",
+    "sourcePhotoIds": []
+  }
+}

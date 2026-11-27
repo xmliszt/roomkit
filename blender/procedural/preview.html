@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset="utf-8" />
+<title>S7 preview</title>
+<style>
+  html, body { margin: 0; background: #f4f1ea; }
+  canvas { display: block; }
+</style>
+<script type="importmap">
+  { "imports": { "three": "/three/build/three.module.js", "three/addons/": "/three/examples/jsm/" } }
+</script>
+<canvas></canvas>
+<script type="module">
+  import * as THREE from 'three'
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+  import { createStage } from '/here/stage.js'
+
+  const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('canvas'), antialias: true, preserveDrawingBuffer: true })
+  const stage = createStage(renderer)
+  const loader = new GLTFLoader()
+
+  window.renderPreview = async function renderPreview(options) {
+    renderer.setSize(options.widthPx, options.heightPx, false)
+    stage.camera.aspect = options.widthPx / options.heightPx
+    const gltf = await loader.loadAsync(options.url)
+    const { centre, radius, box } = stage.show(gltf.scene, options.mount)
+    stage.setEnvironment(options.environment)
+    stage.frame({ centre, radius, box, azimuthDeg: options.azimuthDeg, elevationDeg: options.elevationDeg, zoomOut: options.zoomOut })
+    renderer.render(stage.scene, stage.camera)
+  }
+  window.previewReady = true
+</script>

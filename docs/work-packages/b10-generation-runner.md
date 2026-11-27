@@ -1,0 +1,19 @@
+# B10 — Generation jobs: the `modeler` agent in the daemon (M3)
+
+Read `docs/work-packages/README.md` first. Spec: `docs/PLAN.md` sections 0 (realism bar), 3 (items, pending items, jobs incl. B7's queued `generation` jobs, `AssetMeta`, `colorize`), 5.1 (read the decision paragraph first), 5.3 (`modeler`, `designer`) and 8 (M3 gate); `docs/spikes/s7-agent-blender.md` (how cold modeler runs work: `blender/procedural/run-cold.sh`, `make-job.py`, the helper library, the tool limits); `roles/modeler.md`; `blender/normalize.py` and `blender/recolor.py` (D1).
+
+## Scope (`packages/shared`, `packages/daemon`, `packages/mcp`, `roles/`, `blender/procedural/` (job setup only, not the prompt), `scripts/`, fake CLI fixtures, and in `apps/web` only files that switch on job kind or stage)
+
+1. **Generation runner:** consumes `generation` jobs (B7's queued ones and new ones). Per job: a job folder with `job.json` (name, mount, expected size, photo paths), the photos (for an inventoried object: its best views as full upright crops plus masks from the inventory; for chat: the attached or found photo), and the helper library; a fresh `modeler` turn with `roles/modeler.md` and the S7 tool limits (read and write in the job folder, Blender only through the wrappers); then `normalize.py` to the expected size; then the PLAN 5.1 step 4 gate (validator, proportions, triangles, file size, textures). On a gate failure the modeler gets the failure text and one retry; then the job fails and the pending item stays for retry. On success: the asset goes into `assets/<assetId>/` with `meta.json` (incl. `referenceLuma`), `points.bin`, `lines.bin`, `thumb.png`, and one `item.update` switches the pending item to the asset and its size.
+2. **Stages and limits:** `queued | generating | ready | failed` with progress (at most 4 events per second); at most 2 agent turns at once and one Blender run at a time (PLAN 5); written to `.planner/jobs.json` and resumed after a restart.
+3. **Auto-model after inventory** (PLAN 5.1 decision): queue generation for floor items and wall-mounted appliances whose largest side is over 0.4 m; leave the rest queued-but-held until a `generation.start {itemId}` ("model this").
+4. **Designer tools:** `asset_generate` (a chat request with an optional photo; with no photo the designer first finds a product photo on the web with its own web tools, attaches it to the job, and says where it came from) and `asset_variant` (colour-only variants through `recolor.py`, no agent turn; shape variants through a modeler turn with the parent's render as the photo). Each finished job posts an `asset` chat block.
+5. **"Try another version" hook:** a `generation.alternatives {itemId}` command that queues image-to-3D jobs; the workers come from C3 (another agent). If C3 has not merged, implement the command and job kind against a fake worker and leave the real worker call behind one function.
+
+Propose every new schema in PLAN section 3 marked "proposed in B10". Codex: no `advisor`; follow the README's Codex rule; you may continue past the proposal with your best design, and the orchestrator reviews it before merge.
+
+## Gate
+
+1. `pnpm check`, all earlier gates, `pnpm test:e2e` pass.
+2. `pnpm gate:b10` (fake modeler CLI that writes a known Blender script, real Blender, temp folders): an inventory's queued jobs for a 1.8 m sofa box and a 0.3 m bin: the sofa is generated automatically, the bin is held until `generation.start`; a deliberately wrong-proportion model fails the gate, gets one retry, then fails cleanly; a colour variant is made without an agent turn; restart mid-job resumes.
+3. `scripts/b10-real-generate.ts`, run by the orchestrator by hand: the real modeler on the user's sofa (the inventory's crops) in a temp project; the GLB passes the gate and its screenshot is saved for the user.

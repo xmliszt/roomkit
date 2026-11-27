@@ -1,0 +1,26 @@
+[project]
+name = "interior-planner-spike-s1"
+version = "0.0.0"
+description = "S1: room geometry from casual photos"
+requires-python = "==3.13.*"
+dependencies = [
+    "mlx>=0.32.4",
+    "mlx-spatial==0.0.3",
+    "numpy>=2.5.5",
+    "pillow>=13.0.0",
+    "pillow-heif>=1.8.1",
+    "torch>=2.15.0",
+    "huggingface-hub",
+    "matplotlib",
+    "torchvision>=0.29.2",
+    "roma>=1.8.0",
+    "einops>=0.8.2",
+    "trimesh>=5.2.2",
+    "scikit-learn>=1.9.1",
+    "opencv-python>=5.1.0.95",
+    "scipy>=1.18.1",
+    "tqdm>=4.70.1",
+]
+
+[tool.uv]
+package = false

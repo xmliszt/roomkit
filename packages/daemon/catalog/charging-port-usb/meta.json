@@ -1,0 +1,16 @@
+{
+  "id": "charging-port-usb",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 0.086,
+    "height": 0.086,
+    "depth": 0.0088
+  },
+  "mount": "wall",
+  "triangleCount": 1316,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "procedural",
+    "sourcePhotoIds": []
+  }
+}

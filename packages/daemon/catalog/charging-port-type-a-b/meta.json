@@ -1,0 +1,16 @@
+{
+  "id": "charging-port-type-a-b",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 0.06985,
+    "height": 0.1143,
+    "depth": 0.0075
+  },
+  "mount": "wall",
+  "triangleCount": 2188,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "procedural",
+    "sourcePhotoIds": []
+  }
+}

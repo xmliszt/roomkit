@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "Roomkit은 채팅 입력란에서 받아쓰기를 할 때 마이크를 사용합니다.";
+"NSSpeechRecognitionUsageDescription" = "Roomkit은 Apple의 음성 인식 기능을 사용해 받아쓴 내용을 채팅 입력란의 텍스트로 변환합니다.";

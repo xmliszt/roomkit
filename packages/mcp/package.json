@@ -1,0 +1,17 @@
+{
+  "name": "@planner/mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@planner/shared": "workspace:*",
+    "ws": "8.21.0",
+    "zod": "4.6.6"
+  },
+  "devDependencies": {
+    "@types/ws": "8.18.1"
+  }
+}

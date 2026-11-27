@@ -1,0 +1,16 @@
+{
+  "id": "charging-port-type-g-double",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 0.146,
+    "height": 0.086,
+    "depth": 0.01
+  },
+  "mount": "wall",
+  "triangleCount": 2188,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "procedural",
+    "sourcePhotoIds": []
+  }
+}

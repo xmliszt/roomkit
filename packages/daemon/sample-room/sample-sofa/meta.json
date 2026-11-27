@@ -1,0 +1,16 @@
+{
+  "id": "sample-sofa",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 2.19365,
+    "height": 0.869359,
+    "depth": 0.892743
+  },
+  "mount": "floor",
+  "triangleCount": 43000,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "roomkit-sample",
+    "sourcePhotoIds": []
+  }
+}

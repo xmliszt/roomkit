@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Roomkit</title>
+        <item>
+            <title>0.1.0</title>
+            <pubDate>Fri, 27 Nov 2026 07:00:31 +0000</pubDate>
+            <sparkle:version>0.1.0</sparkle:version>
+            <sparkle:shortVersionString>0.1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <sparkle:hardwareRequirements>arm64</sparkle:hardwareRequirements>
+            <enclosure url="https://1gsj5xkqpdkrf2ss.public.blob.vercel-storage.com/releases/0.1.0/9deb4bc2ef1f7e71682b18a4eb11086a2271468e8fdb0b530a1f355899ac40b1/Roomkit-0.1.0-arm64.dmg" length="79398954" type="application/octet-stream" sparkle:edSignature="3pCKWSjzauuHEv0UExcMHybnNR+dzQLv+fictyzYNIu06vXpq4BvaopJsZ6e2JShF//dPdcF82g1GDr8IuOzCw=="/>
+        </item>
+    </channel>
+</rss><!-- sparkle-signatures:
+edSignature: JqrRedepKL0mjO/PgDE2zMERiEYaehSqoHCGxBNBDfz7Kf2jgodrEDT/UkxzFEaMtijZFBTrs9mZwvOUfZntAg==
+length: 957
+-->

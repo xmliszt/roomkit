@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "Roomkit używa mikrofonu podczas dyktowania wiadomości w polu tekstowym czatu.";
+"NSSpeechRecognitionUsageDescription" = "Roomkit korzysta z funkcji rozpoznawania mowy Apple, aby przekształcić dyktowaną wiadomość w tekst w polu czatu.";

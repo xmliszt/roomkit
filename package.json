@@ -1,0 +1,51 @@
+{
+  "name": "roomkit",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p . && pnpm -r typecheck",
+    "lint": "biome check .",
+    "test": "vitest run",
+    "check": "pnpm typecheck && pnpm lint && pnpm test",
+    "daemon": "node packages/daemon/src/main.ts",
+    "web": "pnpm -F @planner/web dev",
+    "gate:m0": "node scripts/gate-m0.ts",
+    "gate:b1": "node scripts/gate-b1.ts",
+    "gate:m2": "node scripts/gate-m2.ts",
+    "gate:b3": "node scripts/gate-b3.ts",
+    "gate:b4": "node scripts/gate-b4.ts",
+    "test:e2e": "playwright test -c apps/web/playwright.config.ts && playwright test -c apps/web/src/capture/e2e/playwright.config.ts",
+    "gate:b5": "node scripts/gate-b5.ts",
+    "gate:b6": "node scripts/gate-b6.ts",
+    "gate:b7": "node scripts/gate-b7.ts",
+    "gate:b10": "node scripts/gate-b10.ts",
+    "gate:b11": "node scripts/gate-b11.ts",
+    "gate:b15": "node scripts/gate-b15.ts",
+    "gate:b14": "node scripts/gate-b14.ts",
+    "gate:b18": "node scripts/gate-b18.ts",
+    "gate:b16": "node scripts/gate-b16.ts",
+    "gate:b17": "node scripts/gate-b17.ts",
+    "gate:a15": "node scripts/gate-a15.ts",
+    "gate:b21": "node scripts/gate-b21.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "@planner/shared": "workspace:*",
+    "@playwright/test": "1.64.1",
+    "@types/node": "24.10.0",
+    "@types/three": "0.187.0",
+    "@types/ws": "8.18.1",
+    "@vercel/blob": "2.9.0",
+    "gltf-validator": "2.0.0-dev.3.10",
+    "jsdom": "31.0.1",
+    "three": "0.187.0",
+    "typescript": "7.0.2",
+    "vitest": "4.1.12",
+    "ws": "8.21.0",
+    "zod": "4.6.6"
+  }
+}

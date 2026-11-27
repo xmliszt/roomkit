@@ -1,0 +1,11 @@
+{
+  "name": "s4-blender-headless-spike",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "dependencies": {
+    "gltf-validator": "2.0.0-dev.3.10",
+    "playwright": "1.65.1",
+    "three": "0.187.0"
+  }
+}

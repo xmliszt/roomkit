@@ -1,0 +1,338 @@
+[
+  {
+    "name": "flux",
+    "repo": "madroid/flux.1-schnell-mflux-4bit",
+    "revision": "4a5ef87e8f50a9d8576ea2f01e3bb4f00c5f1f5d",
+    "gated": false,
+    "total_bytes": 9853300846,
+    "files": [
+      {
+        "rfilename": "README.md",
+        "blobId": "17075f8bd770aa35726868cf18792ef67e3c4974",
+        "size": 149
+      },
+      {
+        "rfilename": "config.json",
+        "blobId": "f97d75665b9e65e036ccb80ed990630808a33b17",
+        "size": 54
+      },
+      {
+        "rfilename": "text_encoder/0.safetensors",
+        "blobId": "e211eac0ae401e8ead05e0dfa040b2d32ad3ab40",
+        "size": 124067769,
+        "lfs": {
+          "sha256": "87bafc13b6598011335a0f0a86e0714a55524d6e2fa40cb93b46040a4610b266",
+          "size": 124067769,
+          "pointerSize": 134
+        }
+      },
+      {
+        "rfilename": "text_encoder_2/0.safetensors",
+        "blobId": "62c55e3c7fb91e92ad3f328a55482455ed440452",
+        "size": 2146329953,
+        "lfs": {
+          "sha256": "ff803fd05b4d48c106c31e1cc5e94b265248a023e4dbd341a8f9c6c0e02e8afd",
+          "size": 2146329953,
+          "pointerSize": 135
+        }
+      },
+      {
+        "rfilename": "text_encoder_2/1.safetensors",
+        "blobId": "28fa0c471f267ff0c099c81b57661c8c720febc6",
+        "size": 722093908,
+        "lfs": {
+          "sha256": "d2fc465f78133b2f993ca3bc42aeb8869b5931b098438b99f5d1bdf079f2aca7",
+          "size": 722093908,
+          "pointerSize": 134
+        }
+      },
+      {
+        "rfilename": "tokenizer/merges.txt",
+        "blobId": "76e821f1b6f0a9709293c3b6b51ed90980b3166b",
+        "size": 524619
+      },
+      {
+        "rfilename": "tokenizer/special_tokens_map.json",
+        "blobId": "cf0682d6de72c1547f41b4f6d7c59f62deffef94",
+        "size": 588
+      },
+      {
+        "rfilename": "tokenizer/tokenizer_config.json",
+        "blobId": "fa68d34b2c764d749e29ace3632691499f58aad6",
+        "size": 725
+      },
+      {
+        "rfilename": "tokenizer/vocab.json",
+        "blobId": "469be27c5c010538f845f518c4f5e8574c78f7c8",
+        "size": 1059962
+      },
+      {
+        "rfilename": "tokenizer_2/added_tokens.json",
+        "blobId": "3f5132007c4fcf42b75b65c8b6aa49c7098bcdf4",
+        "size": 2593
+      },
+      {
+        "rfilename": "tokenizer_2/special_tokens_map.json",
+        "blobId": "17ade346a1042cbe0c1436f5bedcbd85c099d582",
+        "size": 2543
+      },
+      {
+        "rfilename": "tokenizer_2/spiece.model",
+        "blobId": "317a5ccbde45300f5d1d970d4d449af2108b147e",
+        "size": 791656,
+        "lfs": {
+          "sha256": "d60acb128cf7b7f2536e8f38a5b18a05535c9e14c7a355904270e15b0945ea86",
+          "size": 791656,
+          "pointerSize": 131
+        }
+      },
+      {
+        "rfilename": "tokenizer_2/tokenizer_config.json",
+        "blobId": "c03f2d72d11fe7c2be76a8a19d1b14a2b60dfb05",
+        "size": 20838
+      },
+      {
+        "rfilename": "transformer/0.safetensors",
+        "blobId": "eef34dbbf51afa6dd3810a19e78de1269e608a0f",
+        "size": 2124145064,
+        "lfs": {
+          "sha256": "1e30cc9df188e18c5227d3a2b91627e951b9cbfde5f619416368dba8646cccbd",
+          "size": 2124145064,
+          "pointerSize": 135
+        }
+      },
+      {
+        "rfilename": "transformer/1.safetensors",
+        "blobId": "ed8786e931b1057c7fce66e5d51febe9bb76a6fc",
+        "size": 2141393586,
+        "lfs": {
+          "sha256": "83f02f2540c5ecffddfcb3efd315ea505787cb115d3952e965a4558257155fec",
+          "size": 2141393586,
+          "pointerSize": 135
+        }
+      },
+      {
+        "rfilename": "transformer/2.safetensors",
+        "blobId": "50094977d9d67cafb1ed571fd8317770539009fe",
+        "size": 2146515444,
+        "lfs": {
+          "sha256": "4c086f1198c288999d44449976571793293a0af3535125ee321b8ff333002482",
+          "size": 2146515444,
+          "pointerSize": 135
+        }
+      },
+      {
+        "rfilename": "transformer/3.safetensors",
+        "blobId": "c38c705deae4b7f87ec0827eb495f3b9ddd11b6f",
+        "size": 281697267,
+        "lfs": {
+          "sha256": "702f3347cb53b40fb8678e22c70dcbfd4d5dfd2a6071bf72636750be9e0f4403",
+          "size": 281697267,
+          "pointerSize": 134
+        }
+      },
+      {
+        "rfilename": "vae/0.safetensors",
+        "blobId": "644104f9f873b85748cf4538f2dbbf0f17992fd9",
+        "size": 164654128,
+        "lfs": {
+          "sha256": "85038aa180082cc651c883f2a8b3831e3267fd2cb97f80471b4e5a7897082a19",
+          "size": 164654128,
+          "pointerSize": 134
+        }
+      }
+    ]
+  },
+  {
+    "name": "sdxl",
+    "repo": "stabilityai/stable-diffusion-xl-base-1.0",
+    "revision": "462165984030d82259a11f4367a4eed129e94a7b",
+    "gated": false,
+    "total_bytes": 6941210313,
+    "files": [
+      {
+        "rfilename": "LICENSE.md",
+        "blobId": "af7e355e31c0d976933aa0d06759611151ad8c39",
+        "size": 14109
+      },
+      {
+        "rfilename": "README.md",
+        "blobId": "3de812966870aa7122954891ce74faabc77335a9",
+        "size": 8668
+      },
+      {
+        "rfilename": "model_index.json",
+        "blobId": "6cc5138ddb67e9309c9b4e058e33e52087f1d215",
+        "size": 609
+      },
+      {
+        "rfilename": "scheduler/scheduler_config.json",
+        "blobId": "e5bc8421e047838523be7acfb6720f167f7382f6",
+        "size": 479
+      },
+      {
+        "rfilename": "text_encoder/config.json",
+        "blobId": "cde352ada4bb95fdad2fc503b8121257cef215a6",
+        "size": 565
+      },
+      {
+        "rfilename": "text_encoder/model.fp16.safetensors",
+        "blobId": "e224fcda070dc105fd83c64ed2074f47a1b0ff7b",
+        "size": 246144152,
+        "lfs": {
+          "sha256": "660c6f5b1abae9dc498ac2d21e1347d2abdb0cf6c0c0c8576cd796491d9a6cdd",
+          "size": 246144152,
+          "pointerSize": 134
+        }
+      },
+      {
+        "rfilename": "text_encoder_2/config.json",
+        "blobId": "da1848b5ed17b676f021578838f12c4023b86379",
+        "size": 575
+      },
+      {
+        "rfilename": "text_encoder_2/model.fp16.safetensors",
+        "blobId": "1a41ba6f6d67ebaaea453978332a941d0bc5dae5",
+        "size": 1389382176,
+        "lfs": {
+          "sha256": "ec310df2af79c318e24d20511b601a591ca8cd4f1fce1d8dff822a356bcdb1f4",
+          "size": 1389382176,
+          "pointerSize": 135
+        }
+      },
+      {
+        "rfilename": "tokenizer/merges.txt",
+        "blobId": "76e821f1b6f0a9709293c3b6b51ed90980b3166b",
+        "size": 524619
+      },
+      {
+        "rfilename": "tokenizer/special_tokens_map.json",
+        "blobId": "2c2130b544c0c5a72d5d00da071ba130a9800fb2",
+        "size": 472
+      },
+      {
+        "rfilename": "tokenizer/tokenizer_config.json",
+        "blobId": "2e8612a429492973fe60635b3f44a28b065cfac0",
+        "size": 737
+      },
+      {
+        "rfilename": "tokenizer/vocab.json",
+        "blobId": "469be27c5c010538f845f518c4f5e8574c78f7c8",
+        "size": 1059962
+      },
+      {
+        "rfilename": "tokenizer_2/merges.txt",
+        "blobId": "76e821f1b6f0a9709293c3b6b51ed90980b3166b",
+        "size": 524619
+      },
+      {
+        "rfilename": "tokenizer_2/special_tokens_map.json",
+        "blobId": "ae0c5be6f35217e51c4c000fd325d8de0294e99c",
+        "size": 460
+      },
+      {
+        "rfilename": "tokenizer_2/tokenizer_config.json",
+        "blobId": "a8438e020c4497a429240d6b89e0bf9a6e2ffa92",
+        "size": 725
+      },
+      {
+        "rfilename": "tokenizer_2/vocab.json",
+        "blobId": "469be27c5c010538f845f518c4f5e8574c78f7c8",
+        "size": 1059962
+      },
+      {
+        "rfilename": "unet/config.json",
+        "blobId": "c8714c90f0e2409156da42781954416cb7df36af",
+        "size": 1680
+      },
+      {
+        "rfilename": "unet/diffusion_pytorch_model.fp16.safetensors",
+        "blobId": "cfd71e1a1bcbfabb2d8256a5d89d8a6fe5608c98",
+        "size": 5135149760,
+        "lfs": {
+          "sha256": "83e012a805b84c7ca28e5646747c90a243c65c8ba4f070e2d7ddc9d74661e139",
+          "size": 5135149760,
+          "pointerSize": 135
+        }
+      },
+      {
+        "rfilename": "vae/config.json",
+        "blobId": "a66a171ba7c8efb1a8fc3bdc64e65318eade8e13",
+        "size": 642
+      },
+      {
+        "rfilename": "vae/diffusion_pytorch_model.fp16.safetensors",
+        "blobId": "d490d01ec5a179303986f73b7ef0675f014cf016",
+        "size": 167335342,
+        "lfs": {
+          "sha256": "bcb60880a46b63dea58e9bc591abe15f8350bde47b405f9c38f4be70c6161e68",
+          "size": 167335342,
+          "pointerSize": 134
+        }
+      }
+    ]
+  },
+  {
+    "name": "depth",
+    "repo": "diffusers/controlnet-depth-sdxl-1.0",
+    "revision": "17bb97973f29801224cd66f192c5ffacf82648b4",
+    "gated": false,
+    "total_bytes": 2502143953,
+    "files": [
+      {
+        "rfilename": "README.md",
+        "blobId": "58c18e27c5df96ca046f8b8a426f8e6cf305514b",
+        "size": 3545
+      },
+      {
+        "rfilename": "config.json",
+        "blobId": "9e36326b51f8c1d0b35cc74aa75cfd2504cc8d5f",
+        "size": 1274
+      },
+      {
+        "rfilename": "diffusion_pytorch_model.fp16.safetensors",
+        "blobId": "5cc12d9bd303e7ce96f3d2be5a56d343222ed04d",
+        "size": 2502139134,
+        "lfs": {
+          "sha256": "66a6813e6bd7270ecfe68206a59ddd605a011ae85321188376605c66e0a4f303",
+          "size": 2502139134,
+          "pointerSize": 135
+        }
+      }
+    ]
+  },
+  {
+    "name": "estimator",
+    "repo": "depth-anything/Depth-Anything-V2-Small-hf",
+    "revision": "5426e4f0f36572d16453bbda7a8389317b1bef99",
+    "gated": false,
+    "total_bytes": 99179785,
+    "files": [
+      {
+        "rfilename": "README.md",
+        "blobId": "2beda67327d9ea6b655b1cbae711342038eab576",
+        "size": 4400
+      },
+      {
+        "rfilename": "config.json",
+        "blobId": "9207d3a304e86517dab21638c559d8b3195d41b6",
+        "size": 950
+      },
+      {
+        "rfilename": "model.safetensors",
+        "blobId": "94c4baf1f543643f97b56508cd2b9d03b2529c6b",
+        "size": 99173660,
+        "lfs": {
+          "sha256": "3152477ce0d8d6978d76b995120de97cb5b928701fd0f817769f59e249a16b70",
+          "size": 99173660,
+          "pointerSize": 133
+        }
+      },
+      {
+        "rfilename": "preprocessor_config.json",
+        "blobId": "a7822a90a0e91a14d50d1996953bac8f389a4377",
+        "size": 775
+      }
+    ]
+  }
+]

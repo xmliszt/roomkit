@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>S2 and S7 Furniture</title>
+    <style>
+      :root {
+        --bg: #f4f1ea;
+        --ink: #2b2a27;
+        --muted: #76726a;
+        --line: #dcd7cc;
+        --selected: #e8e3d8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: var(--bg);
+        color: var(--ink);
+        font: 14px/1.4 -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      }
+      body {
+        display: grid;
+        grid-template-columns: 240px 1fr;
+      }
+      nav {
+        border-right: 1px solid var(--line);
+        padding: 16px 12px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 4px;
+        overflow-y: auto;
+      }
+      #objects {
+        display: flex;
+        flex-direction: column;
+        row-gap: 4px;
+      }
+      .toggle {
+        display: flex;
+        column-gap: 8px;
+        align-items: center;
+        margin: 0 4px 12px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      h2 {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        margin: 12px 4px 2px;
+      }
+      h1 {
+        font-size: 13px;
+        font-weight: 600;
+        margin: 0 4px 8px;
+      }
+      button {
+        all: unset;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 6px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 2px;
+      }
+      button:hover,
+      button[aria-current='true'] {
+        background: var(--selected);
+      }
+      button:focus-visible {
+        outline: 2px solid var(--ink);
+      }
+      .detail {
+        color: var(--muted);
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+      main {
+        position: relative;
+        min-width: 0;
+      }
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .hint {
+        position: absolute;
+        left: 16px;
+        bottom: 12px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      @media (max-width: 640px) {
+        body {
+          grid-template-columns: 1fr;
+          grid-template-rows: auto 1fr;
+        }
+        #objects {
+          flex-direction: row;
+        }
+        nav {
+          overflow-x: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          padding: 8px 16px;
+        }
+        h1 {
+          display: none;
+        }
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <nav aria-label="Objects">
+      <h1>Image to 3D (S2) beside agent-built (S7)</h1>
+      <label class="toggle"><input type="checkbox" id="environment" /> Environment map</label>
+      <div id="objects"></div>
+    </nav>
+    <main>
+      <canvas></canvas>
+      <div class="hint">Drag to turn, scroll to zoom</div>
+    </main>
+    <script type="module">
+      import * as THREE from 'three'
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+      import { createStage } from './stage.js'
+
+      const canvas = document.querySelector('canvas')
+      const list = document.querySelector('#objects')
+      const environmentToggle = document.querySelector('#environment')
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true })
+      renderer.setPixelRatio(window.devicePixelRatio)
+      const stage = createStage(renderer)
+      const controls = new OrbitControls(stage.camera, canvas)
+      controls.enableDamping = true
+      const loader = new GLTFLoader()
+
+      function resize() {
+        const { clientWidth, clientHeight } = canvas.parentElement
+        renderer.setSize(clientWidth, clientHeight, false)
+        stage.camera.aspect = clientWidth / clientHeight
+        stage.camera.updateProjectionMatrix()
+      }
+
+      async function show(entry, button) {
+        for (const other of list.querySelectorAll('button')) other.setAttribute('aria-current', String(other === button))
+        const gltf = await loader.loadAsync(entry.file)
+        gltf.scene.rotation.y = THREE.MathUtils.degToRad(entry.yawDeg ?? 0)
+        const { centre, radius, box } = stage.show(gltf.scene, entry.mount)
+        stage.frame({ centre, radius, box, azimuthDeg: 30, elevationDeg: 20, zoomOut: 1.2 })
+        controls.target.copy(centre)
+        window.viewerShown = entry.name
+      }
+
+      environmentToggle.addEventListener('change', () => stage.setEnvironment(environmentToggle.checked))
+      stage.setEnvironment(false)
+      const objects = await (await fetch('objects.json')).json()
+      let group
+      for (const entry of objects) {
+        if (entry.group !== group) {
+          group = entry.group
+          const heading = document.createElement('h2')
+          heading.textContent = group
+          list.append(heading)
+        }
+        const button = document.createElement('button')
+        const name = document.createElement('span')
+        name.textContent = entry.label
+        const detail = document.createElement('span')
+        detail.className = 'detail'
+        detail.textContent = `${entry.sizeCm} cm · ${entry.triangleCount.toLocaleString()} tris · ${entry.sizeKb.toLocaleString()} KB`
+        button.append(name, detail)
+        button.addEventListener('click', () => show(entry, button))
+        list.append(button)
+      }
+      window.addEventListener('resize', resize)
+      resize()
+      renderer.setAnimationLoop(() => {
+        controls.update()
+        renderer.render(stage.scene, stage.camera)
+      })
+      await show(objects[0], list.querySelector('button'))
+    </script>
+  </body>
+</html>

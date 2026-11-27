@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "Roomkit menggunakan mikrofon saat Anda mendiktekan pesan di kolom teks obrolan.";
+"NSSpeechRecognitionUsageDescription" = "Roomkit menggunakan pengenalan ucapan Apple untuk mengubah pesan yang Anda diktekan menjadi teks dalam obrolan.";

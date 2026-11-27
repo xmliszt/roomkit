@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": ["scripts", "e2e", "test/integration", "*.ts"],
+  "exclude": ["scripts/spikes", "python", "blender", "node_modules"]
+}

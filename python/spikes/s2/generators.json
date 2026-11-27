@@ -1,0 +1,23 @@
+{
+  "trellis2": {
+    "label": "TRELLIS.2 (mlx-spatial)",
+    "up": "+Z",
+    "front": "-Y",
+    "yawDeg": {
+      "fridge": 180
+    }
+  },
+  "trellis2-50k": {
+    "label": "TRELLIS.2, 50k faces",
+    "up": "+Z",
+    "front": "-Y"
+  },
+  "sam3d": {
+    "label": "SAM 3D Objects (mlx-spatial)",
+    "up": "+Z",
+    "front": "-Y"
+  },
+  "hunyuan21": {
+    "label": "Hunyuan3D 2.1 (MPS port)"
+  }
+}

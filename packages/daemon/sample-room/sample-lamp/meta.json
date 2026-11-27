@@ -1,0 +1,16 @@
+{
+  "id": "sample-lamp",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 0.4,
+    "height": 1.6,
+    "depth": 0.4
+  },
+  "mount": "floor",
+  "triangleCount": 11568,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "roomkit-sample",
+    "sourcePhotoIds": []
+  }
+}

@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "Roomkit はチャットの入力欄で音声入力する際にマイクを使用します。";
+"NSSpeechRecognitionUsageDescription" = "Roomkit は Apple の音声認識を使い、話した内容をチャットの入力欄にテキストとして入力します。";

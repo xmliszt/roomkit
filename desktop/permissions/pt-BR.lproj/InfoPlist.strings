@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "O Roomkit usa o microfone quando você dita uma mensagem no campo de texto do chat.";
+"NSSpeechRecognitionUsageDescription" = "O Roomkit usa o reconhecimento de fala da Apple para converter o que você dita em texto no chat.";

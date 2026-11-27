@@ -1,0 +1,16 @@
+{
+  "id": "sample-rug",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 2.567936,
+    "height": 0.012,
+    "depth": 1.8
+  },
+  "mount": "floor",
+  "triangleCount": 16556,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "roomkit-sample",
+    "sourcePhotoIds": []
+  }
+}

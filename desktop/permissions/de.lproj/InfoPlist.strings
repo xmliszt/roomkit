@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "Roomkit verwendet dein Mikrofon, wenn du eine Nachricht in das Chat-Eingabefeld diktierst.";
+"NSSpeechRecognitionUsageDescription" = "Roomkit verwendet die Spracherkennung von Apple, um dein Diktat in Text im Chat-Eingabefeld umzuwandeln.";

@@ -1,0 +1,270 @@
+  ✓   8 [capture] › apps/web/src/capture/e2e/capture.gate.ts:23:3 › capture four photos and reconstruct with weak scale (10.0s)
+  ✓   9 [capture] › apps/web/src/capture/e2e/capture.gate.ts:188:1 › start from photos on the empty projects page (830ms)
+  ✓  10 [capture] › apps/web/src/capture/e2e/capture.gate.ts:197:1 › queued scale changes apply to the next run and completion refreshes an open editor (11.9s)
+  ✓  11 [capture] › apps/web/src/capture/e2e/capture.gate.ts:307:1 › clear all sizes recovers from multiple rejected furniture references (2.1s)
+  ✓  12 [capture] › apps/web/src/capture/e2e/mirror-generation.gate.ts:8:1 › mirrored surface points and trace lines appear on the model's flipped side (36.0s)
+  ✘  13 [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with base-map UV channel (12.2s)
+  ✓  14 [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with base-map UV transform (9.2s)
+  ✘  15 [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with repeating transformed base-map UVs (12.7s)
+  ✘  16 [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with missing colour mask (18.1s)
+(node:91211) TimeoutNegativeWarning: -122.70600000000559 is a negative number.
+Timeout duration was set to 1.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  17 [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with invalid colour mask (14.3s)
+  ✘  18 [capture] › apps/web/src/capture/e2e/mirror.gate.ts:71:3 › floor mirror moves the distinctive side, undo restores it, duplicate mirrored persists (1.1m)
+  ✘  19 [capture] › apps/web/src/capture/e2e/mirror.gate.ts:71:3 › wall mirror moves the distinctive side, undo restores it, duplicate mirrored persists (19.7s)
+  ✘  20 [capture] › apps/web/src/capture/e2e/object-labels.gate.ts:10:1 › labels follow hover and selection; L, the button and palette share the saved choice (1.1m)
+  ✓  21 [capture] › apps/web/src/capture/e2e/object-labels.gate.ts:82:1 › unavailable browser storage keeps labels usable and off by default (23.3s)
+  ✓  22 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:88:3 › move with snap on, Alt released (55.5s)
+  ✓  23 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:120:3 › rotate with snap on, Alt released (24.3s)
+  ✓  24 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:88:3 › move with snap off, Alt released (34.8s)
+  ✓  25 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:120:3 › rotate with snap off, Alt released (55.6s)
+  ✘  26 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:88:3 › move with snap on, Alt held (1.1m)
+  ✓  27 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:120:3 › rotate with snap on, Alt held (50.8s)
+  ✘  28 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:88:3 › move with snap off, Alt held (1.0m)
+  ✓  29 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:120:3 › rotate with snap off, Alt held (41.9s)
+  ✓  30 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:160:1 › snap button, S and palette share a saved browser setting (35.0s)
+  ✓  31 [capture] › apps/web/src/capture/e2e/snapping.gate.ts:187:1 › snap works and defaults on when browser storage is unavailable (12.3s)
+  ✓  32 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:81:1 › surface materials repeat in metres, paint previews commit once, walls undo and ceiling shows inside (47.8s)
+  ✘  33 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:290:1 › texture maps retain metric repeats during numeric previews and the palette paints every wall (9.7s)
+  ✓  34 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:500:1 › surface rows name UUID walls by room order and truncate without wrapping (9.9s)
+  ✓  35 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:627:3 › floor grid toggles pixels independently of snap with storage available (16.8s)
+  ✓  36 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:627:3 › floor grid toggles pixels independently of snap with storage unavailable (15.3s)
+  ✓  37 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:703:1 › Escape closes ordinary popovers without deselecting items and plain floor clicks clear selection (25.0s)
+  ✓  38 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:777:1 › undo and redo clear a live surface preview (29.8s)
+  ✓  39 [capture] › apps/web/src/capture/e2e/surfaces.gate.ts:823:1 › real B15 wallpaper reads left to right on a wall without mirroring (28.1s)
+[plannerd] info: listening on 127.0.0.1:57263
+  ✓  40 [capture] › apps/web/src/capture/e2e/tailnet.gate.ts:9:1 › same-origin browser GETs through the tailnet proxy require the configured Tailscale login (3.2s)
+
+
+  1) [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with base-map UV channel
+
+    TimeoutError: locator.click: Timeout 5000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'mirror', exact: true })
+        - locator resolved to <button type="button" aria-pressed="false" class="press h-7 rounded-panel border border-line px-2.5 hover:border-line-strong aria-pressed:border-accent aria-pressed:text-accent">mirror</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+        - element is visible, enabled and stable
+        - scrolling into view if needed
+        - done scrolling
+        - performing click action
+
+
+      145 |     if (!select) throw new Error("Missing mask point");
+      146 |     await page.mouse.click(select.x, select.y);
+    > 147 |     await page.getByRole("button", { name: "mirror", exact: true }).click();
+          |                                                                     ^
+      148 |     await expect.poll(colors).toEqual(originalColors.toReversed());
+      149 |     await page.screenshot({ path: testInfo.outputPath("mirrored-mask.png") });
+      150 |     await page.keyboard.press("ControlOrMeta+z");
+        at apps/web/src/capture/e2e/mirror-mask.gate.ts:147:69
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-1e9a9-do-with-base-map-UV-channel-capture/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-1e9a9-do-with-base-map-UV-channel-capture/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-1e9a9-do-with-base-map-UV-channel-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-1e9a9-do-with-base-map-UV-channel-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with repeating transformed base-map UVs
+
+    Error: Timeout 5000ms exceeded while waiting on the predicate
+
+      141 |               { isBlue: false, isGrey: true },
+      142 |             ];
+    > 143 |     await expect.poll(colors).toEqual(originalColors);
+          |                               ^
+      144 |     const select = points.at(0);
+      145 |     if (!select) throw new Error("Missing mask point");
+      146 |     await page.mouse.click(select.x, select.y);
+        at apps/web/src/capture/e2e/mirror-mask.gate.ts:143:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-2e048-ng-transformed-base-map-UVs-capture/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-2e048-ng-transformed-base-map-UVs-capture/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-2e048-ng-transformed-base-map-UVs-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-2e048-ng-transformed-base-map-UVs-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with missing colour mask
+
+    Error: Timeout 5000ms exceeded while waiting on the predicate
+
+      141 |               { isBlue: false, isGrey: true },
+      142 |             ];
+    > 143 |     await expect.poll(colors).toEqual(originalColors);
+          |                               ^
+      144 |     const select = points.at(0);
+      145 |     if (!select) throw new Error("Missing mask point");
+      146 |     await page.mouse.click(select.x, select.y);
+        at apps/web/src/capture/e2e/mirror-mask.gate.ts:143:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-ee5a6-do-with-missing-colour-mask-capture/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-ee5a6-do-with-missing-colour-mask-capture/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-ee5a6-do-with-missing-colour-mask-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-ee5a6-do-with-missing-colour-mask-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [capture] › apps/web/src/capture/e2e/mirror-mask.gate.ts:31:3 › a textured item keeps its model and colour adjustment through mirror and undo with invalid colour mask
+
+    Error: Timeout 5000ms exceeded while waiting on the predicate
+
+      141 |               { isBlue: false, isGrey: true },
+      142 |             ];
+    > 143 |     await expect.poll(colors).toEqual(originalColors);
+          |                               ^
+      144 |     const select = points.at(0);
+      145 |     if (!select) throw new Error("Missing mask point");
+      146 |     await page.mouse.click(select.x, select.y);
+        at apps/web/src/capture/e2e/mirror-mask.gate.ts:143:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-e1426-do-with-invalid-colour-mask-capture/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-e1426-do-with-invalid-colour-mask-capture/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-e1426-do-with-invalid-colour-mask-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/mirror-mask.gate.ts-a-text-e1426-do-with-invalid-colour-mask-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [capture] › apps/web/src/capture/e2e/mirror.gate.ts:71:3 › floor mirror moves the distinctive side, undo restores it, duplicate mirrored persists
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('complementary', { name: 'Inspector' }).getByRole('button', { name: 'duplicate mirrored', exact: true })
+
+
+      236 |     await inspector
+      237 |       .getByRole("button", { name: "duplicate mirrored", exact: true })
+    > 238 |       .click();
+          |        ^
+      239 |     await expect
+      240 |       .poll(async () => (await savedProject(project.id)).scene.items.length)
+      241 |       .toBe(2);
+        at apps/web/src/capture/e2e/mirror.gate.ts:238:8
+
+    Error Context: ../../../../../../tmp/planner-a5-results/mirror.gate.ts-floor-mirro-b1ec1-duplicate-mirrored-persists-capture/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror.gate.ts-floor-mirro-b1ec1-duplicate-mirrored-persists-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/mirror.gate.ts-floor-mirro-b1ec1-duplicate-mirrored-persists-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [capture] › apps/web/src/capture/e2e/mirror.gate.ts:71:3 › wall mirror moves the distinctive side, undo restores it, duplicate mirrored persists
+
+    Error: Timeout 5000ms exceeded while waiting on the predicate
+
+      149 |             (await pixel({ page, point: screen(offsetM - 0.3) })).isOrange,
+      150 |         )
+    > 151 |         .toBe(input.isLeft);
+          |          ^
+      152 |       await expect
+      153 |         .poll(
+      154 |           async () =>
+        at expectSide (apps/web/src/capture/e2e/mirror.gate.ts:151:10)
+        at apps/web/src/capture/e2e/mirror.gate.ts:164:11
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror.gate.ts-wall-mirror-07c1a-duplicate-mirrored-persists-capture/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../tmp/planner-a5-results/mirror.gate.ts-wall-mirror-07c1a-duplicate-mirrored-persists-capture/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/mirror.gate.ts-wall-mirror-07c1a-duplicate-mirrored-persists-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/mirror.gate.ts-wall-mirror-07c1a-duplicate-mirrored-persists-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [capture] › apps/web/src/capture/e2e/object-labels.gate.ts:10:1 › labels follow hover and selection; L, the button and palette share the saved choice
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.screenshot: Test timeout of 60000ms exceeded.
+    Call log:
+      - taking page screenshot
+      - waiting for fonts to load...
+      - fonts loaded
+
+
+      59 |   await expect(toggle).toHaveAttribute("aria-pressed", "true");
+      60 |   await expect(visibleTags).toHaveCount(3);
+    > 61 |   await page.screenshot({ path: join(evidence, "labels-on.png") });
+         |              ^
+      62 |   await page.reload();
+      63 |   await expect(toggle).toHaveAttribute("aria-pressed", "true");
+      64 |   await expect(visibleTags).toHaveCount(3);
+        at apps/web/src/capture/e2e/object-labels.gate.ts:61:14
+
+    Error Context: ../../../../../../tmp/planner-a5-results/object-labels.gate.ts-labe-6355f-ette-share-the-saved-choice-capture/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/object-labels.gate.ts-labe-6355f-ette-share-the-saved-choice-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/object-labels.gate.ts-labe-6355f-ette-share-the-saved-choice-capture/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [capture] › apps/web/src/capture/e2e/snapping.gate.ts:88:3 › move with snap on, Alt held ──────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: mouse.move: Test timeout of 60000ms exceeded.
+
+      69 |   await options.page.mouse.move(options.from.x, options.from.y);
+      70 |   await options.page.mouse.down();
+    > 71 |   await options.page.mouse.move(options.to.x, options.to.y, { steps: 16 });
+         |                            ^
+      72 |   await options.page.mouse.up();
+      73 |   if (options.alt) await options.page.keyboard.up("Alt");
+      74 | }
+        at drag (apps/web/src/capture/e2e/snapping.gate.ts:71:28)
+        at apps/web/src/capture/e2e/snapping.gate.ts:99:5
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/snapping.gate.ts-move-with-snap-on-Alt-held-capture/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../../tmp/planner-a5-results/snapping.gate.ts-move-with-snap-on-Alt-held-capture/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../../../tmp/planner-a5-results/snapping.gate.ts-move-with-snap-on-Alt-held-capture/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../../../tmp/planner-a5-results/snapping.gate.ts-move-with-snap-on-Alt-held-capture/trace.zip

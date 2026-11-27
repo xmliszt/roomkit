@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="{{locale}}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{description}}">
+    <meta name="theme-color" content="#f4f1ea">
+    <link rel="canonical" href="{{canonical}}">
+    {{alternates}}
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Roomkit">
+    <meta property="og:url" content="{{canonical}}">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{socialDescription}}">
+    <meta property="og:image" content="{{socialImage}}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{socialImageAlt}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="/assets/roomkit.ico" sizes="32x32">
+    <link rel="stylesheet" href="/site.css">
+    <title>{{title}}</title>
+    <script type="application/ld+json">{{structuredData}}</script>
+    <script defer src="/_vercel/insights/script.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{{skip}}</a>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#main"><img src="/assets/roomkit.ico" alt="" width="26" height="26">Roomkit</a>
+        <nav aria-label="{{mainNav}}">
+          <a href="#workflow">{{navWorkflow}}</a>
+          <a href="#tools">{{navTools}}</a>
+          <a href="#remote">{{navRemote}}</a>
+        </nav>
+        <details class="language-switcher">
+          <summary aria-label="{{language}} ({{locale}})">
+            <svg class="language-globe" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" aria-hidden="true">
+              <defs>
+                <path id="language-globe-meridian" d="M8 1.5a6.5 6.5 0 0 1 0 13" vector-effect="non-scaling-stroke"/>
+              </defs>
+              <g transform="rotate(24 8 8)">
+                <use href="#language-globe-meridian" class="globe-meridian" style="--meridian-offset: 0deg" transform="translate(8) scale(0.001 1) translate(-8)"/>
+                <use href="#language-globe-meridian" class="globe-meridian" style="--meridian-offset: -42deg" transform="translate(8) scale(-0.67 1) translate(-8)"/>
+                <use href="#language-globe-meridian" class="globe-meridian" style="--meridian-offset: 42deg" transform="translate(8) scale(0.67 1) translate(-8)"/>
+                <use href="#language-globe-meridian" class="globe-meridian" style="--meridian-offset: 180deg" opacity="0"/>
+                <use href="#language-globe-meridian" class="globe-meridian" style="--meridian-offset: 138deg" opacity="0"/>
+                <use href="#language-globe-meridian" class="globe-meridian" style="--meridian-offset: 222deg" opacity="0"/>
+                <path d="M1.5 8h13"/>
+              </g>
+              <circle cx="8" cy="8" r="6.5"/>
+            </svg>
+            {{locale}}
+          </summary>
+          <ul aria-label="{{language}}">
+            {{languageLinks}}
+          </ul>
+        </details>
+      </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="hero shell" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="label">{{heroLabel}}</p>
+          <h1 id="hero-title">{{heroTitle}}</h1>
+          <p>{{heroIntro}}</p>
+          <div class="download-actions">
+            <a class="button primary mac-download" href="{{macDmgUrl}}">
+              <span>{{macDownload}}</span>
+              <bdi class="download-version" dir="ltr" data-release-version{{macVersionHidden}}>{{macVersion}}</bdi>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3m-8 4v2h10v-2"/></svg>
+            </a>
+            <p>{{macRequirements}}</p>
+          </div>
+        </div>
+        <figure class="room-viewport" id="room-preview" data-controls-label="{{heroControls}}">
+          <img src="/assets/room-fallback.webp" alt="{{heroAlt}}" width="1056" height="690" fetchpriority="high">
+        </figure>
+      </section>
+
+      <section id="workflow" class="section shell" aria-labelledby="workflow-title">
+        <h2 id="workflow-title">{{workflowTitle}}</h2>
+        <div class="workflow-layout">
+          <nav class="chapter-list" id="chapter-list" aria-label="{{workflowNav}}">
+            <a href="#capture-photos"><span class="chapter-number">01</span> <span class="chapter-label">{{capture}}</span></a>
+            <a href="#rebuild-room"><span class="chapter-number">02</span> <span class="chapter-label">{{rebuild}}</span></a>
+            <a href="#reference-furniture"><span class="chapter-number">03</span> <span class="chapter-label">{{reference}}</span></a>
+            <a href="#place-furniture"><span class="chapter-number">04</span> <span class="chapter-label">{{place}}</span></a>
+            <a href="#walk-room"><span class="chapter-number">05</span> <span class="chapter-label">{{walk}}</span></a>
+            <a href="#render-room"><span class="chapter-number">06</span> <span class="chapter-label">{{render}}</span></a>
+          </nav>
+          <div class="chapter-panels" id="chapter-panels">
+            <article id="capture-photos" class="chapter">
+              <div class="shot photo-shot">
+                <div class="photo-strip">
+                  <img src="/assets/room-photo-a.webp" width="600" height="420" alt="{{photoEntrance}}" loading="lazy">
+                  <img src="/assets/room-photo-b.webp" width="600" height="420" alt="{{photoBalcony}}" loading="lazy">
+                  <img src="/assets/room-photo-c.webp" width="600" height="420" alt="{{photoSofa}}" loading="lazy">
+                </div>
+              </div>
+              <p class="chapter-caption">{{captureCaption}}</p>
+            </article>
+            <article id="rebuild-room" class="chapter">
+              <div class="shot shot-room" data-room-demo>
+                <img src="/assets/room-without-chair.webp" width="1056" height="690" alt="{{rebuildAlt}}" loading="lazy">
+              </div>
+              <p class="chapter-caption">{{rebuildCaption}}</p>
+            </article>
+            <article id="reference-furniture" class="chapter">
+              <div class="shot reference-shot">
+                <figure class="reference-photo"><img src="/assets/chair-reference.webp" width="640" height="640" alt="{{referenceAlt}}" loading="lazy"></figure>
+                <div class="demo-chat">
+                  <p class="demo-prompt">{{referencePrompt}}</p>
+                  <p class="demo-response"><span class="status-dot" aria-hidden="true"></span> {{referenceStatus}}</p>
+                </div>
+              </div>
+              <p class="chapter-caption">{{referenceCaption}}</p>
+            </article>
+            <article id="place-furniture" class="chapter">
+              <div class="shot shot-room" data-room-demo>
+                <img src="/assets/room-fallback.webp" width="1056" height="690" alt="{{placeAlt}}" loading="lazy">
+              </div>
+              <p class="chapter-caption">{{placeCaption}}</p>
+            </article>
+            <article id="walk-room" class="chapter">
+              <div class="shot shot-room walk-shot" data-room-demo>
+                <img src="/assets/room-snapshot.webp" width="1200" height="750" alt="{{walkAlt}}" loading="lazy">
+              </div>
+              <p class="chapter-caption">{{walkCaption}}</p>
+            </article>
+            <article id="render-room" class="chapter">
+              <div class="shot render-shot">
+                <img src="/assets/room-snapshot.webp" width="1200" height="750" alt="{{snapshotAlt}}" loading="lazy">
+                <img class="render-image" src="/assets/room-render.webp" width="1200" height="750" alt="{{renderAlt}}" loading="lazy">
+                <div class="compare-ui" hidden>
+                  <span class="compare-label compare-left" aria-hidden="true">{{snapshotLabel}}</span>
+                  <span class="compare-label compare-right" aria-hidden="true">{{renderLabel}}</span>
+                  <div class="compare-divider" aria-hidden="true"><span><svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor"><path d="m6 5-4 4 4 4m6-8 4 4-4 4"/></svg></span></div>
+                  <input class="compare-range" type="range" min="0" max="100" value="50" data-value-text="{{compareValue}}" aria-label="{{compareLabel}}">
+                </div>
+              </div>
+              <p class="chapter-caption">{{renderCaption}}</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="tools" class="section shell" aria-labelledby="tools-title">
+        <h2 id="tools-title">{{toolsTitle}}</h2>
+        <div class="tool-grid">
+          <article class="tool">
+            <img src="/assets/tool-claude.svg" width="108" height="84" alt="" loading="lazy">
+            <div><h3>{{agentTitle}}</h3>
+              <p>{{agentIntro}}</p>
+            </div>
+          </article>
+          <article class="tool">
+            <img src="/assets/tool-blender.svg" width="108" height="84" alt="" loading="lazy">
+            <div><h3>Blender</h3>
+              <p>{{blenderIntro}}</p>
+            </div>
+          </article>
+          <article class="tool">
+            <img src="/assets/tool-rack.svg" width="108" height="84" alt="" loading="lazy">
+            <div><h3>{{modelsTitle}}</h3>
+              <p>{{modelsIntro}}</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="setup" class="section split-section shell" aria-labelledby="setup-title">
+        <div class="section-copy">
+          <h2 id="setup-title">{{downloadTitle}}</h2>
+          <div class="download-actions">
+            <a class="button primary mac-download" href="{{macDmgUrl}}">
+              <span>{{macDownload}}</span>
+              <bdi class="download-version" dir="ltr" data-release-version{{macVersionHidden}}>{{macVersion}}</bdi>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v8m-3-3 3 3 3-3m-8 4v2h10v-2"/></svg>
+            </a>
+            <p>{{macRequirements}}</p>
+            <p class="download-file">.dmg · <a data-release-checksum href="{{macChecksumUrl}}">{{macChecksum}}</a></p>
+          </div>
+          <p>{{macInstall}}</p>
+        </div>
+        <figure class="download-illustration" aria-hidden="true">
+          {{macInstallFigure}}
+        </figure>
+      </section>
+
+      <section id="source-setup" class="section split-section shell" aria-labelledby="source-setup-title">
+        <div class="section-copy">
+          <h2 id="source-setup-title">{{sourceSetupTitle}}</h2>
+          <p>{{setupIntro}} {{sourceAccess}}</p>
+        </div>
+        <ol class="step-list" data-copy-label="{{copyLabel}}" data-copy-success="{{copySuccess}}" data-copy-failure="{{copyFailure}}">
+          <li>
+            <h3>{{installTitle}}</h3>
+            <p>{{installIntro}}</p>
+            <pre><code>npm install --global pnpm@10.34.9</code></pre>
+            <pre><code>git clone https://github.com/xmliszt/roomkit.git
+cd roomkit
+pnpm install --frozen-lockfile</code></pre>
+          </li>
+          <li>
+            <h3>{{daemonTitle}}</h3>
+            <p>{{daemonIntro}}</p>
+            <pre><code>pnpm daemon</code></pre>
+          </li>
+          <li>
+            <h3>{{webTitle}}</h3>
+            <p>{{webIntro}}</p>
+            <pre><code>pnpm web</code></pre>
+            <p>{{webProject}}</p>
+          </li>
+          <li>
+            <h3>{{photoToolsTitle}}</h3>
+            <p>{{photoToolsIntro}}</p>
+            <p>{{startPhotos}}</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="remote" class="section split-section remote-section shell" aria-labelledby="remote-title">
+        <div class="section-copy">
+          <h2 id="remote-title">{{remoteTitle}}</h2>
+          <p>{{remoteIntro}}</p>
+          <p>{{remoteSourceIntro}}</p>
+          <figure class="device-diagram">
+            <img src="/assets/tailnet-devices.svg" alt="{{remoteAlt}}" width="520" height="250" loading="lazy">
+            <svg viewBox="0 0 520 250" aria-hidden="true"><path pathLength="100" d="M186 192.9C264 192.9 342 163.1 420.2 163.1"/></svg>
+          </figure>
+        </div>
+        <ol class="step-list" data-copy-label="{{copyLabel}}" data-copy-success="{{copySuccess}}" data-copy-failure="{{copyFailure}}">
+          <li>
+            <h3>{{connectTitle}}</h3>
+            <p>{{connectIntro}}</p>
+          </li>
+          <li>
+            <h3>{{restartTitle}}</h3>
+            <p>{{restartIntro}}</p>
+            <pre><code>PLANNER_WEB_ORIGIN='http://localhost:3210,http://127.0.0.1:3210,https://roomkit-host.example-tailnet.ts.net:8443' \
+PLANNER_ALLOWED_HOSTS='roomkit-host.example-tailnet.ts.net:8443' \
+PLANNER_TAILNET_LOGINS='you@example.com' pnpm daemon</code></pre>
+            <pre><code>PLANNER_ALLOWED_HOSTS='roomkit-host.example-tailnet.ts.net:8443' pnpm web</code></pre>
+          </li>
+          <li>
+            <h3>{{serveTitle}}</h3>
+            <p>{{serveIntro}}</p>
+            <pre><code>sh scripts/tailnet-serve.sh</code></pre>
+            <p>{{serveCheck}}</p>
+            <p>{{stopIntro}}</p>
+            <pre><code>sh scripts/tailnet-serve.sh off</code></pre>
+          </li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div class="footer-links">
+          <a id="open-other-apps" href="#other-apps" aria-haspopup="dialog" aria-controls="other-apps">{{otherApps}}</a>
+          <a class="footer-copyright" href="https://liyuxuan.dev/" dir="ltr">© 2026 <span>Li Yuxuan</span></a>
+          <a href="/license.txt" hreflang="en">{{mitLicense}}</a>
+        </div>
+        <a href="#main">{{top}} ↑</a>
+      </div>
+      <dialog id="other-apps" class="other-apps-dialog" aria-labelledby="other-apps-title">
+        <div class="other-apps-content">
+          <h2 id="other-apps-title">{{otherApps}}</h2>
+          <ul class="app-tray" role="list">
+            <li><a href="https://paws.garden" target="_blank" rel="noopener" autofocus><img src="/assets/paws-icon.svg" width="48" height="48" alt="" loading="lazy">Paws</a></li>
+            <li><a href="https://laundro.cafe" target="_blank" rel="noopener"><img src="/assets/laundro-cafe-icon.svg" width="48" height="48" alt="" loading="lazy">laundro.cafe</a></li>
+            <li><a href="https://liyuxuan.dev/apps/joodle" target="_blank" rel="noopener"><img src="/assets/joodle-icon.jpg" width="48" height="48" alt="" loading="lazy">Joodle</a></li>
+            <li><a href="https://taboo-ai.com" target="_blank" rel="noopener"><img src="/assets/taboo-ai-icon.png" width="48" height="48" alt="" loading="lazy">Taboo AI</a></li>
+            <li><a href="https://www.moire.day" target="_blank" rel="noopener"><img src="/assets/moire-icon.svg" width="48" height="48" alt="" loading="lazy">Moiré</a></li>
+          </ul>
+          <form method="dialog"><button class="button" type="submit">{{close}}</button></form>
+        </div>
+      </dialog>
+    </footer>
+    <div id="landing-motion" hidden></div>
+    <script type="importmap">
+      {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"}}
+    </script>
+    <script type="module" src="/site.js"></script>
+  </body>
+</html>

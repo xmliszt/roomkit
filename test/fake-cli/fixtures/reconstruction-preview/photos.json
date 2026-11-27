@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "photos": [
+    {
+      "photoId": "00000000-0000-4000-8000-00000000000a",
+      "origin": "capture",
+      "sourceFileName": "00000000-0000-4000-8000-00000000000a.jpg",
+      "widthPx": 20,
+      "heightPx": 15,
+      "orientation": 1,
+      "blurScore": 100,
+      "kind": "accepted",
+      "uprightPath": "upright/00000000-0000-4000-8000-00000000000a.jpg",
+      "visionPath": "vision/00000000-0000-4000-8000-00000000000a.jpg",
+      "visionWidthPx": 20,
+      "visionHeightPx": 15
+    },
+    {
+      "photoId": "00000000-0000-4000-8000-00000000000b",
+      "origin": "capture",
+      "sourceFileName": "00000000-0000-4000-8000-00000000000b.jpg",
+      "widthPx": 20,
+      "heightPx": 15,
+      "orientation": 1,
+      "blurScore": 100,
+      "kind": "accepted",
+      "uprightPath": "upright/00000000-0000-4000-8000-00000000000b.jpg",
+      "visionPath": "vision/00000000-0000-4000-8000-00000000000b.jpg",
+      "visionWidthPx": 20,
+      "visionHeightPx": 15
+    },
+    {
+      "photoId": "00000000-0000-4000-8000-00000000000c",
+      "origin": "capture",
+      "sourceFileName": "00000000-0000-4000-8000-00000000000c.jpg",
+      "widthPx": 20,
+      "heightPx": 15,
+      "orientation": 1,
+      "blurScore": 100,
+      "kind": "rejected",
+      "reason": "blur"
+    }
+  ]
+}

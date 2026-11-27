@@ -1,0 +1,16 @@
+{
+  "id": "sample-table",
+  "kind": "catalog",
+  "nativeSizeM": {
+    "width": 1.22,
+    "height": 0.425,
+    "depth": 0.62
+  },
+  "mount": "floor",
+  "triangleCount": 9056,
+  "hasColorMask": false,
+  "provenance": {
+    "method": "roomkit-sample",
+    "sourcePhotoIds": []
+  }
+}

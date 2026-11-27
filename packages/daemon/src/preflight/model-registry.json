@@ -1,0 +1,318 @@
+{
+  "baseUrl": "https://huggingface.co",
+  "models": [
+    {
+      "id": "map-anything",
+      "name": "MapAnything",
+      "folder": "map-anything",
+      "repo": "facebook/map-anything",
+      "revision": "a1d87e9086706fb9974f3be5a3e3a0ca5401c5aa",
+      "files": [
+        { "path": "config.json", "sizeBytes": 5776 },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 4914062480,
+          "sha256": "981f060c64664dff3272b5f5a823d350abe71a2f144444db4cfc325f3ed5a3a0"
+        }
+      ]
+    },
+    {
+      "id": "sam2.1-hiera-large",
+      "name": "SAM 2.1 Hiera Large",
+      "folder": "sam2.1-hiera-large",
+      "repo": "facebook/sam2.1-hiera-large",
+      "revision": "665f8e2ad61cf5f53d65644ff27c8ee525124610",
+      "files": [
+        { "path": "config.json", "sizeBytes": 5705 },
+        { "path": "preprocessor_config.json", "sizeBytes": 683 },
+        { "path": "processor_config.json", "sizeBytes": 95 },
+        { "path": "video_preprocessor_config.json", "sizeBytes": 705 },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 897897416,
+          "sha256": "dc407dce21301fd94abb395c5099b4f2c455fdc8a8f261ac3d0ea6d4cd197230"
+        }
+      ]
+    },
+    {
+      "id": "sam3-mlx",
+      "name": "SAM 3 (MLX, bf16)",
+      "folder": "sam3-mlx-bf16",
+      "repo": "mlx-community/sam3-bf16",
+      "revision": "dfe573c3171dbcfda8399c650d9135afa7e94592",
+      "files": [
+        { "path": "config.json", "sizeBytes": 31472 },
+        { "path": "processor_config.json", "sizeBytes": 436 },
+        { "path": "special_tokens_map.json", "sizeBytes": 588 },
+        { "path": "tokenizer.json", "sizeBytes": 3642073 },
+        { "path": "tokenizer_config.json", "sizeBytes": 322 },
+        { "path": "vocab.json", "sizeBytes": 862328 },
+        { "path": "model.safetensors.index.json", "sizeBytes": 177337 },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 1720094752,
+          "sha256": "09badb342d2fa10e617a78116dfe8e39d3f35ede1a8881e49f3be4609a384e14"
+        }
+      ]
+    },
+    {
+      "id": "trellis2",
+      "name": "TRELLIS.2",
+      "folder": "trellis2",
+      "repo": "microsoft/TRELLIS.2-4B",
+      "revision": "af44b45f2e35a493886929c6d786e563ec68364d",
+      "files": [
+        {
+          "path": "pipeline.json",
+          "sizeBytes": 4186
+        },
+        {
+          "path": "texturing_pipeline.json",
+          "sizeBytes": 2965
+        },
+        {
+          "path": "ckpts/ss_flow_img_dit_1_3B_64_bf16.json",
+          "sizeBytes": 467
+        },
+        {
+          "path": "ckpts/ss_flow_img_dit_1_3B_64_bf16.safetensors",
+          "sizeBytes": 2584426920,
+          "sha256": "ca01377c485bec418076d38ee80166d32dc776d744f2553b835cba1e97a7abf6"
+        },
+        {
+          "path": "ckpts/slat_flow_img2shape_dit_1_3B_512_bf16.json",
+          "sizeBytes": 458
+        },
+        {
+          "path": "ckpts/slat_flow_img2shape_dit_1_3B_512_bf16.safetensors",
+          "sizeBytes": 2584574424,
+          "sha256": "ec5e0917ef9b7e25ad51dffc7d19687a42019871f94239f2fa7f86264c55b70f"
+        },
+        {
+          "path": "ckpts/slat_flow_img2shape_dit_1_3B_1024_bf16.json",
+          "sizeBytes": 458
+        },
+        {
+          "path": "ckpts/slat_flow_img2shape_dit_1_3B_1024_bf16.safetensors",
+          "sizeBytes": 2584574424,
+          "sha256": "07cd0596f634c5adc1890023d16023afc5eed02fb84b22bb23aff5bf0030fbbd"
+        },
+        {
+          "path": "ckpts/slat_flow_imgshape2tex_dit_1_3B_512_bf16.json",
+          "sizeBytes": 458
+        },
+        {
+          "path": "ckpts/slat_flow_imgshape2tex_dit_1_3B_512_bf16.safetensors",
+          "sizeBytes": 2584672728,
+          "sha256": "8371aa1c5d13be79dcd5ddfd2cf3835e902e204dc34427169a1c702828e1a94d"
+        },
+        {
+          "path": "ckpts/slat_flow_imgshape2tex_dit_1_3B_1024_bf16.json",
+          "sizeBytes": 458
+        },
+        {
+          "path": "ckpts/slat_flow_imgshape2tex_dit_1_3B_1024_bf16.safetensors",
+          "sizeBytes": 2584672728,
+          "sha256": "580401269059a339b8318ab9ced459a13ba63391721c83a6c383198c29e77686"
+        },
+        {
+          "path": "ckpts/shape_enc_next_dc_f16c32_fp16.json",
+          "sizeBytes": 653
+        },
+        {
+          "path": "ckpts/shape_enc_next_dc_f16c32_fp16.safetensors",
+          "sizeBytes": 708797208,
+          "sha256": "f37c5ff5b983b68e9946060000f09bc131f3e84318a2c8b7430a81e4b4636c41"
+        },
+        {
+          "path": "ckpts/shape_dec_next_dc_f16c32_fp16.json",
+          "sizeBytes": 678
+        },
+        {
+          "path": "ckpts/shape_dec_next_dc_f16c32_fp16.safetensors",
+          "sizeBytes": 948490494,
+          "sha256": "e3b718d3e43e4f8780e9a24ac6fff231811a67e3b058e336e10fe654c911d581"
+        },
+        {
+          "path": "ckpts/tex_dec_next_dc_f16c32_fp16.json",
+          "sizeBytes": 705
+        },
+        {
+          "path": "ckpts/tex_dec_next_dc_f16c32_fp16.safetensors",
+          "sizeBytes": 948458812,
+          "sha256": "97ea69addea2ecd9312910f5f548234665eef51c088386180b7cd5b258645e3c"
+        }
+      ]
+    },
+    {
+      "id": "trellis2-sparse-decoder",
+      "name": "TRELLIS.2 sparse decoder",
+      "folder": "trellis2/microsoft/TRELLIS-image-large",
+      "repo": "microsoft/TRELLIS-image-large",
+      "revision": "25e0d31ffbebe4b5a97464dd851910efc3002d96",
+      "files": [
+        {
+          "path": "ckpts/ss_dec_conv3d_16l8_fp16.json",
+          "sizeBytes": 245
+        },
+        {
+          "path": "ckpts/ss_dec_conv3d_16l8_fp16.safetensors",
+          "sizeBytes": 147591972,
+          "sha256": "1c76d4a40519aa2d711cc263a8404105231ac26db31d946bed48b84fee79009a"
+        }
+      ]
+    },
+    {
+      "id": "dinov3-vitl16",
+      "name": "DINOv3 ViT-L/16",
+      "folder": "dinov3-vitl16-pretrain-lvd1689m",
+      "repo": "camenduru/dinov3-vitl16-pretrain-lvd1689m",
+      "revision": "3c276edd87d6f6e569ff0c4400e086807d0f3881",
+      "files": [
+        {
+          "path": "config.json",
+          "sizeBytes": 745
+        },
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 1212559808,
+          "sha256": "dcb2e45127cccbf1601e5f42fef165eea275c8e5213197e8dcf3f48822718179"
+        }
+      ]
+    },
+    {
+      "id": "rmbg2",
+      "name": "RMBG-2.0",
+      "folder": "rmbg2",
+      "repo": "1038lab/RMBG-2.0",
+      "revision": "1cd4787601caeb4c8e826dba7ea8e2163b5208df",
+      "files": [
+        {
+          "path": "model.safetensors",
+          "sizeBytes": 884878856,
+          "sha256": "566ed80c3d95f87ada6864d4cbe2290a1c5eb1c7bb0b123e984f60f76b02c3a7"
+        },
+        {
+          "path": "config.json",
+          "sizeBytes": 405
+        },
+        {
+          "path": "BiRefNet_config.py",
+          "sizeBytes": 298
+        },
+        {
+          "path": "birefnet.py",
+          "sizeBytes": 91320
+        }
+      ]
+    },
+    {
+      "id": "sam-3d-objects-mlx",
+      "name": "SAM 3D Objects (MLX)",
+      "folder": "sam-3d-objects-mlx",
+      "repo": "appautomaton/sam-3d-objects-mlx",
+      "revision": "b2842f861bbe7466345a61c3790ec70c36f6114c",
+      "files": [
+        {
+          "path": "checkpoints/conversion_metadata/slat_decoder_gs.yaml",
+          "sizeBytes": 142
+        },
+        {
+          "path": "checkpoints/conversion_metadata/slat_decoder_gs_4.yaml",
+          "sizeBytes": 142
+        },
+        {
+          "path": "checkpoints/conversion_metadata/slat_decoder_mesh.yaml",
+          "sizeBytes": 142
+        },
+        {
+          "path": "checkpoints/conversion_metadata/slat_generator.yaml",
+          "sizeBytes": 143
+        },
+        {
+          "path": "checkpoints/conversion_metadata/ss_decoder.yaml",
+          "sizeBytes": 141
+        },
+        {
+          "path": "checkpoints/conversion_metadata/ss_generator.yaml",
+          "sizeBytes": 143
+        },
+        {
+          "path": "checkpoints/pipeline.yaml",
+          "sizeBytes": 3590
+        },
+        {
+          "path": "checkpoints/slat_decoder_gs.safetensors",
+          "sizeBytes": 171451019,
+          "sha256": "642b4a8d1d03c12d45db43b3d81b9cc8acf8afc74c58d2c416e84aec2e788d63"
+        },
+        {
+          "path": "checkpoints/slat_decoder_gs.yaml",
+          "sizeBytes": 576
+        },
+        {
+          "path": "checkpoints/slat_decoder_gs_4.safetensors",
+          "sizeBytes": 170244882,
+          "sha256": "62a13f41f91819da05553224cde4e0f0f65ce8f41c2873196cd35625d7ef6ba9"
+        },
+        {
+          "path": "checkpoints/slat_decoder_gs_4.yaml",
+          "sizeBytes": 575
+        },
+        {
+          "path": "checkpoints/slat_decoder_mesh.safetensors",
+          "sizeBytes": 363718540,
+          "sha256": "51f27a1c7a7892eff9576cf73bb888a255d4a184a76a9bfd9675f0d9ba464f5a"
+        },
+        {
+          "path": "checkpoints/slat_decoder_mesh.yaml",
+          "sizeBytes": 300
+        },
+        {
+          "path": "checkpoints/slat_generator.safetensors",
+          "sizeBytes": 4906129160,
+          "sha256": "ee0c1601f3259f61cb22030bad839a3fe30a95b5f78bc9451babdbd8836fd06d"
+        },
+        {
+          "path": "checkpoints/slat_generator.yaml",
+          "sizeBytes": 1986
+        },
+        {
+          "path": "checkpoints/ss_decoder.safetensors",
+          "sizeBytes": 147592136,
+          "sha256": "f5ac316ca86ca26a6bdc006ae1961c6c87d857e494f2a0463fd2c19825962baf"
+        },
+        {
+          "path": "checkpoints/ss_decoder.yaml",
+          "sizeBytes": 244
+        },
+        {
+          "path": "checkpoints/ss_generator.safetensors",
+          "sizeBytes": 6689521984,
+          "sha256": "9f0fd0a7e288eadf7e51b6ead30f70aea0cd2ac4fe4160ee1deb412916bcfa0d"
+        },
+        {
+          "path": "checkpoints/ss_generator.yaml",
+          "sizeBytes": 5076
+        },
+        {
+          "path": "conversion_manifest.json",
+          "sizeBytes": 4265
+        },
+        {
+          "path": "moge/conversion_metadata/model.yaml",
+          "sizeBytes": 142
+        },
+        {
+          "path": "moge/model.safetensors",
+          "sizeBytes": 1256740032,
+          "sha256": "dbdf89d1f7651b9213a507923b4f100fed87489bb7425fda7f7d430bcb31d8a9"
+        },
+        {
+          "path": "weight-audit-source-vs-mlx.json",
+          "sizeBytes": 4746
+        }
+      ]
+    }
+  ]
+}

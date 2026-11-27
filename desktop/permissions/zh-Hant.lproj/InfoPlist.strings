@@ -1,0 +1,2 @@
+"NSMicrophoneUsageDescription" = "在聊天輸入框使用聽寫功能時，Roomkit 會使用麥克風。";
+"NSSpeechRecognitionUsageDescription" = "Roomkit 使用 Apple 的語音辨識功能，將聽寫內容轉換為聊天輸入框中的文字。";

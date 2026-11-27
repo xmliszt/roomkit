@@ -1,0 +1,7 @@
+packages:
+  - apps/*
+  - marketing/roomkit
+  - packages/*
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

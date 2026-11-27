@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "ROOMKIT_HOSTED_RELEASES=1 node build.mjs",
+  "outputDirectory": "dist",
+  "trailingSlash": true,
+  "rewrites": [
+    { "source": "/appcast.xml", "destination": "/api/release?asset=appcast" },
+    { "source": "/release.json", "destination": "/api/release?asset=version" },
+    {
+      "source": "/downloads/Roomkit.dmg",
+      "destination": "/api/release?asset=dmg"
+    },
+    {
+      "source": "/downloads/Roomkit.dmg.sha256",
+      "destination": "/api/release?asset=checksum"
+    }
+  ]
+}

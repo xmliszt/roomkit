@@ -1,0 +1,56 @@
+#!/usr/bin/env node
+import { chmodSync, mkdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { setTimeout as delay } from "node:timers/promises";
+
+if (process.argv.at(2) === "--version") {
+  process.stdout.write("Homebrew 5.0.0\n");
+  process.exit(0);
+}
+
+const binDir = process.env.FAKE_TOOLS_BIN;
+if (!binDir) {
+  console.error("fake brew: FAKE_TOOLS_BIN is not set");
+  process.exit(1);
+}
+const args = process.argv.slice(2);
+const [command, ...rest] = args;
+const isCask = rest.includes("--cask");
+const formula = rest.filter((arg) => !arg.startsWith("--")).at(0);
+if (command !== "install" || !formula) {
+  console.error(`fake brew: unsupported arguments: ${args.join(" ")}`);
+  process.exit(1);
+}
+
+function writeScript(name, body) {
+  mkdirSync(binDir, { recursive: true });
+  const path = join(binDir, name);
+  writeFileSync(path, `#!/bin/sh\n${body}\n`);
+  chmodSync(path, 0o755);
+}
+
+console.log(`\x1b[34m==>\x1b[0m Fetching ${formula}`);
+for (const percent of [10, 40, 70, 100]) {
+  process.stdout.write(`\r######## ${percent}.0%`);
+  await delay(20);
+}
+process.stdout.write("\n");
+if (formula === "uv" && !isCask) {
+  const uvScript = fileURLToPath(new URL("uv.mjs", import.meta.url));
+  writeScript("uv", `exec "${process.execPath}" "${uvScript}" "$@"`);
+} else if (formula === "blender" && isCask) {
+  writeScript(
+    "blender",
+    'if [ "$1" = "--version" ]; then echo "Blender 5.3.0"; echo "\tbuild hash: 02f0899d78e3"; exit 0; fi\nexit 2',
+  );
+} else if (isCask && (formula === "claude-code" || formula === "codex")) {
+  const cli = formula === "claude-code" ? "claude" : "codex";
+  const replacement = fileURLToPath(new URL(`../fake-cli/${cli}`, import.meta.url));
+  writeScript(cli, `exec "${process.execPath}" "${replacement}" "$@"`);
+} else {
+  console.error(`fake brew: no fake for ${isCask ? "cask " : ""}${formula}`);
+  process.exit(1);
+}
+console.error(`==> Caveats: none`);
+console.log(`\x1b[32m==>\x1b[0m ${formula} was successfully installed!`);
