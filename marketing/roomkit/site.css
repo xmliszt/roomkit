@@ -131,15 +131,11 @@ section[id] {
   margin-inline: auto;
 }
 
-.site-header,
-.site-footer {
-  border-block: 1px solid var(--line);
-}
 .site-header {
   position: sticky;
   z-index: 2;
   inset-block-start: 0;
-  border-block-start: 0;
+  border-block-end: 1px solid var(--line);
   background: var(--paper);
 }
 
@@ -154,8 +150,6 @@ section[id] {
 }
 
 .header-inner,
-.footer-inner,
-.footer-links,
 .header-inner nav,
 .brand {
   display: flex;
@@ -164,28 +158,56 @@ section[id] {
   row-gap: 4px;
 }
 
-.header-inner,
-.footer-inner {
+.header-inner {
   justify-content: space-between;
   flex-wrap: wrap;
   min-height: 52px;
-}
-
-.header-inner {
   padding-block: 8px;
 }
 
-.footer-links {
-  flex-wrap: wrap;
-  column-gap: 8px;
+.site-footer {
+  border-block-start: 1px solid var(--line);
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  justify-items: start;
+  column-gap: clamp(8px, 2vw, 24px);
+  row-gap: 8px;
+  padding-block-start: clamp(16px, 4vw, 48px);
 }
 
 .footer-copyright span {
   text-decoration: underline;
 }
 
-.footer-inner > a {
-  margin-inline-start: auto;
+.footer-wordmark {
+  position: relative;
+  container-type: inline-size;
+  overflow: hidden;
+  margin-block-start: clamp(32px, 8vw, 112px);
+  text-align: center;
+  user-select: none;
+}
+
+.footer-wordmark span {
+  display: block;
+  margin-block-end: -0.18em;
+  color: var(--ink);
+  font: 700 36cqi / 0.86 var(--serif);
+  letter-spacing: -0.035em;
+}
+
+.footer-wordmark::after {
+  position: absolute;
+  inset: 58% 0 0;
+  background: linear-gradient(transparent, var(--paper));
+  backdrop-filter: blur(clamp(2px, 0.6vw, 10px));
+  mask-image: linear-gradient(transparent, black 85%);
+  pointer-events: none;
+  content: "";
 }
 
 .header-inner nav {
@@ -206,8 +228,7 @@ section[id] {
   text-decoration: none;
 }
 
-.header-inner nav a,
-.footer-inner a {
+.header-inner nav a {
   white-space: nowrap;
 }
 
@@ -1088,6 +1109,14 @@ a,
     flex: 1;
     column-gap: 4px;
   }
+  .footer-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footer-license,
+  .footer-top {
+    justify-self: end;
+    text-align: end;
+  }
   .chapter-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1104,9 +1133,6 @@ a,
     --control-padding-inline: 4px;
   }
 
-  .header-inner nav a {
-    font-size: 0.6875rem;
-  }
   .chapter-list a {
     column-gap: 3px;
   }
