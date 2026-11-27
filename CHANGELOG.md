@@ -2,8 +2,6 @@
 
 ## Unreleased
 
-## 0.1.1
-
 - Fix Codex sign-in when its configuration folder has yet to be created.
 - Sign in to Codex or Claude Code directly from Settings → Agents.
 
