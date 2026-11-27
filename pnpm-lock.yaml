@@ -24,8 +24,8 @@ importers:
         specifier: 0.187.0
         version: 0.187.0
       '@types/ws':
-        specifier: 8.18.1
-        version: 8.18.1
+        specifier: 8.18.2
+        version: 8.18.2
       '@vercel/blob':
         specifier: 2.9.0
         version: 2.9.0
@@ -45,8 +45,8 @@ importers:
         specifier: 4.1.12
         version: 4.1.12(@types/node@24.10.0)(jsdom@31.0.1)(vite@7.3.8(@types/node@24.10.0)(jiti@2.7.0)(lightningcss@1.33.0))
       ws:
-        specifier: 8.21.0
-        version: 8.21.0
+        specifier: 8.23.0
+        version: 8.23.0
       zod:
         specifier: 4.6.6
         version: 4.6.6
@@ -139,8 +139,8 @@ importers:
         specifier: 0.35.5
         version: 0.35.5(@types/node@24.10.0)
       ws:
-        specifier: 8.21.0
-        version: 8.21.0
+        specifier: 8.23.0
+        version: 8.23.0
       yauzl:
         specifier: 3.4.0
         version: 3.4.0
@@ -152,8 +152,8 @@ importers:
         version: 4.6.6
     devDependencies:
       '@types/ws':
-        specifier: 8.18.1
-        version: 8.18.1
+        specifier: 8.18.2
+        version: 8.18.2
       '@types/yauzl':
         specifier: 3.4.0
         version: 3.4.0
@@ -167,15 +167,15 @@ importers:
         specifier: workspace:*
         version: link:../shared
       ws:
-        specifier: 8.21.0
-        version: 8.21.0
+        specifier: 8.23.0
+        version: 8.23.0
       zod:
         specifier: 4.6.6
         version: 4.6.6
     devDependencies:
       '@types/ws':
-        specifier: 8.18.1
-        version: 8.18.1
+        specifier: 8.18.2
+        version: 8.18.2
 
   packages/shared:
     dependencies:
@@ -1016,8 +1016,8 @@ packages:
   '@types/webxr@0.5.24':
     resolution: {integrity: sha512-h8fgEd/DpoS9CBrjEQXR+dIDraopAEfu4wYVNY2tEPwk60stPWhvZMf4Foo5FakuQ7HFZoa8WceaWFervK2Ovg==}
 
-  '@types/ws@8.18.1':
-    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
+  '@types/ws@8.18.2':
+    resolution: {integrity: sha512-67MQl+fpWKVTT1NYdnmo3U4sc/xPo/zQBncVnI74qmQa0z/b+1g6iYqNmGCPbxO+zz2aklb08a0oHfegiVd0/w==}
 
   '@types/yauzl@3.4.0':
     resolution: {integrity: sha512-NRPn5w6h8dhcnmx3YIRQcqMywY/+nND/uOkJessedcrowO3C0AssHp3tMJpxKAwOhFOo0OV1y9VtsC5hbKKBAw==}
@@ -2002,8 +2002,8 @@ packages:
     engines: {node: '>=8'}
     hasBin: true
 
-  ws@8.21.0:
-    resolution: {integrity: sha512-Vsp28b7DRcimFQvrqu2Wek3z1iYxDCWqHYB8Qsnk/S4RfaCQzPGPyBNuVjJV3cd6UiKtUtp6sNM77gWvzcCH+g==}
+  ws@8.23.0:
+    resolution: {integrity: sha512-wCkmX8QMOrKjgO8HW2WyDbTSGeqkocxgDzS9iR79rEAexty6/2qzilx3Ag8Tqf9ykop3irLKle0MtVn5qjVnoQ==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -2646,7 +2646,7 @@ snapshots:
 
   '@types/webxr@0.5.24': {}
 
-  '@types/ws@8.18.1':
+  '@types/ws@8.18.2':
     dependencies:
       '@types/node': 24.10.0
 
@@ -3525,7 +3525,7 @@ snapshots:
       siginfo: 2.0.0
       stackback: 0.0.2
 
-  ws@8.21.0: {}
+  ws@8.23.0: {}
 
   xdg-app-paths@5.5.1:
     dependencies:
