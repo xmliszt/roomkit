@@ -695,6 +695,53 @@ test("reduced motion stops the remote signal and finishes the workflow reveal", 
   await expect.poll(readResponse).toBe(1);
 });
 
+test("the footer wordmark replays its left-to-right reveal on reentry", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.route("**/room-preview.js", (route) => route.abort());
+  await page.goto(landingUrl);
+
+  const wordmark = page.locator(".footer-wordmark");
+  const letters = wordmark.locator(".footer-wordmark-text > span");
+  const readOffsets = () =>
+    letters.evaluateAll((nodes) =>
+      nodes.map((node) => {
+        const translate = getComputedStyle(node).translate;
+        return translate === "none"
+          ? 0
+          : Number.parseFloat(translate.split(" ").at(-1) ?? "");
+      }),
+    );
+
+  async function revealWordmark() {
+    await wordmark.evaluate((element) =>
+      element.scrollIntoView({ behavior: "instant", block: "end" }),
+    );
+    await expect
+      .poll(async () => {
+        const offsets = await readOffsets();
+        return (
+          Math.min(...offsets) < 100 &&
+          offsets.at(0) === Math.min(...offsets) &&
+          offsets.at(-1) === 100
+        );
+      })
+      .toBe(true);
+  }
+
+  await expect(wordmark).toHaveCSS("mask-image", "none");
+  await expect.poll(readOffsets).toEqual(Array(7).fill(100));
+  await revealWordmark();
+  await expect.poll(readOffsets).toEqual(Array(7).fill(0));
+
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect.poll(readOffsets).toEqual(Array(7).fill(100));
+  await revealWordmark();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await expect.poll(readOffsets).toEqual(Array(7).fill(0));
+});
+
 test("the footer opens the app tray and closing it restores focus", async ({
   page,
 }) => {
@@ -722,6 +769,7 @@ test("the footer opens the app tray and closing it restores focus", async ({
   expect(await footer.boundingBox()).toEqual(footerBounds);
   await expect(dialog.getByRole("link")).toHaveCount(5);
   const paws = dialog.getByRole("link", { name: "Paws", exact: true });
+  await expect(paws).toHaveCSS("font-size", "13.5px");
   await expect(paws).toHaveAttribute("target", "_blank");
   await expect(paws).toBeFocused();
 

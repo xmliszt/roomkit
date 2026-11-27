@@ -20,6 +20,9 @@ const globeTurn = { duration: 0.56, ease: [0.32, 0, 0.24, 1] };
 const signalTravel = { duration: 2.45, ease: "linear" };
 const signalVisibility = 0.45;
 const iconTransition = { type: "spring", duration: 0.3, bounce: 0 };
+const footerVisibility = 0.2;
+const footerLetterStaggerSeconds = 0.06;
+const footerLetterSpring = { type: "spring", stiffness: 190, damping: 22 };
 
 function subscribeToMotionPreference(callback) {
   motionPreference.addEventListener("change", callback);
@@ -157,6 +160,55 @@ function observeCopyFeedback() {
   };
 }
 
+function observeFooterWordmark() {
+  const wordmark = document.querySelector(".footer-wordmark");
+  const letters = wordmark.querySelectorAll(".footer-wordmark-text > span");
+  let playbacks = [];
+
+  function resetReveal() {
+    for (const playback of playbacks) playback.stop();
+    playbacks = [];
+    for (const letter of letters) {
+      letter.style.removeProperty("--footer-letter-progress");
+    }
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const entry = entries.at(-1);
+      if (!entry || motionPreference.matches) return;
+      if (!entry.isIntersecting) {
+        resetReveal();
+        return;
+      }
+      if (playbacks.length || entry.intersectionRatio < footerVisibility)
+        return;
+
+      playbacks = Array.from(letters, (letter, index) =>
+        animate(0, 1, {
+          ...footerLetterSpring,
+          delay: index * footerLetterStaggerSeconds,
+          onUpdate(progress) {
+            letter.style.setProperty(
+              "--footer-letter-progress",
+              String(progress),
+            );
+          },
+        }),
+      );
+    },
+    { threshold: [0, footerVisibility] },
+  );
+  wordmark.dataset.reveal = "";
+  observer.observe(wordmark);
+
+  return () => {
+    observer.disconnect();
+    resetReveal();
+    delete wordmark.dataset.reveal;
+  };
+}
+
 function LandingMotion() {
   const [scope, animateChapter] = useAnimate();
   const initialized = useRef(false);
@@ -174,6 +226,7 @@ function LandingMotion() {
       observeGlobeHover(isFirstAttachment),
       observeRemoteSignal(),
       observeCopyFeedback(),
+      observeFooterWordmark(),
     ];
     return () => {
       for (const cleanup of stop) cleanup();
