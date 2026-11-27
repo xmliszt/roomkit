@@ -695,7 +695,7 @@ test("reduced motion stops the remote signal and finishes the workflow reveal", 
   await expect.poll(readResponse).toBe(1);
 });
 
-test("the footer reveals its letters from left to right and honors reduced motion", async ({
+test("the footer wordmark replays its left-to-right reveal on reentry", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
@@ -704,30 +704,42 @@ test("the footer reveals its letters from left to right and honors reduced motio
 
   const wordmark = page.locator(".footer-wordmark");
   const letters = wordmark.locator(".footer-wordmark-text > span");
-  await expect(letters.first()).toHaveCSS("opacity", "0");
-  await wordmark.evaluate((element) =>
-    element.scrollIntoView({ behavior: "instant", block: "end" }),
-  );
-
-  await expect
-    .poll(() =>
-      letters.evaluateAll((nodes) => {
-        const opacities = nodes.map((node) =>
-          Number(getComputedStyle(node).opacity),
-        );
-        return (
-          opacities.some((opacity) => opacity > 0) &&
-          opacities.at(0) === Math.max(...opacities) &&
-          opacities.at(-1) === 0
-        );
+  const readOffsets = () =>
+    letters.evaluateAll((nodes) =>
+      nodes.map((node) => {
+        const translate = getComputedStyle(node).translate;
+        return translate === "none"
+          ? 0
+          : Number.parseFloat(translate.split(" ").at(-1) ?? "");
       }),
-    )
-    .toBe(true);
+    );
+
+  async function revealWordmark() {
+    await wordmark.evaluate((element) =>
+      element.scrollIntoView({ behavior: "instant", block: "end" }),
+    );
+    await expect
+      .poll(async () => {
+        const offsets = await readOffsets();
+        return (
+          Math.min(...offsets) < 100 &&
+          offsets.at(0) === Math.min(...offsets) &&
+          offsets.at(-1) === 100
+        );
+      })
+      .toBe(true);
+  }
+
+  await expect(wordmark).toHaveCSS("mask-image", "none");
+  await expect.poll(readOffsets).toEqual(Array(7).fill(100));
+  await revealWordmark();
+  await expect.poll(readOffsets).toEqual(Array(7).fill(0));
+
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect.poll(readOffsets).toEqual(Array(7).fill(100));
+  await revealWordmark();
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(letters.last()).toHaveCSS("opacity", "1");
-  await expect(letters.last()).toHaveCSS("transform", "none");
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await expect(letters.first()).toHaveCSS("opacity", "1");
+  await expect.poll(readOffsets).toEqual(Array(7).fill(0));
 });
 
 test("the footer opens the app tray and closing it restores focus", async ({

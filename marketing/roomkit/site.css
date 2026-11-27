@@ -187,7 +187,6 @@ section[id] {
   container-type: inline-size;
   overflow: hidden;
   margin-block-start: clamp(32px, 8vw, 112px);
-  mask-image: linear-gradient(black 70%, transparent);
   text-align: center;
   user-select: none;
 }
@@ -914,8 +913,8 @@ a,
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .footer-wordmark[data-reveal="waiting"] .footer-wordmark-text > span {
-    opacity: 0;
+  .footer-wordmark[data-reveal] .footer-wordmark-text > span {
+    translate: 0 calc(100% * (1 - var(--footer-letter-progress, 0)));
   }
 
   .button:active {

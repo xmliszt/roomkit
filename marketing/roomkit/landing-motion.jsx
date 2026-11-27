@@ -21,12 +21,8 @@ const signalTravel = { duration: 2.45, ease: "linear" };
 const signalVisibility = 0.45;
 const iconTransition = { type: "spring", duration: 0.3, bounce: 0 };
 const footerVisibility = 0.2;
-const footerLetterEntrance = { opacity: [0, 1], y: ["35%", "0%"] };
-const footerLetterTransition = {
-  delay: stagger(0.06),
-  y: { type: "spring", stiffness: 190, damping: 22 },
-  opacity: { duration: 0.24, ease: "easeOut" },
-};
+const footerLetterStaggerSeconds = 0.06;
+const footerLetterSpring = { type: "spring", stiffness: 190, damping: 22 };
 
 function subscribeToMotionPreference(callback) {
   motionPreference.addEventListener("change", callback);
@@ -166,34 +162,50 @@ function observeCopyFeedback() {
 
 function observeFooterWordmark() {
   const wordmark = document.querySelector(".footer-wordmark");
-  if (wordmark.dataset.reveal === "played") return;
-
   const letters = wordmark.querySelectorAll(".footer-wordmark-text > span");
-  let playback;
-  function finishReveal() {
-    wordmark.dataset.reveal = "played";
+  let playbacks = [];
+
+  function resetReveal() {
+    for (const playback of playbacks) playback.stop();
+    playbacks = [];
+    for (const letter of letters) {
+      letter.style.removeProperty("--footer-letter-progress");
+    }
   }
 
   const observer = new IntersectionObserver(
-    ([entry]) => {
-      if (entry.intersectionRatio < footerVisibility) return;
-      observer.disconnect();
-      playback = animate(letters, footerLetterEntrance, footerLetterTransition);
-      playback.then(finishReveal);
+    (entries) => {
+      const entry = entries.at(-1);
+      if (!entry || motionPreference.matches) return;
+      if (!entry.isIntersecting) {
+        resetReveal();
+        return;
+      }
+      if (playbacks.length || entry.intersectionRatio < footerVisibility)
+        return;
+
+      playbacks = Array.from(letters, (letter, index) =>
+        animate(0, 1, {
+          ...footerLetterSpring,
+          delay: index * footerLetterStaggerSeconds,
+          onUpdate(progress) {
+            letter.style.setProperty(
+              "--footer-letter-progress",
+              String(progress),
+            );
+          },
+        }),
+      );
     },
-    { threshold: footerVisibility },
+    { threshold: [0, footerVisibility] },
   );
-  wordmark.dataset.reveal = "waiting";
+  wordmark.dataset.reveal = "";
   observer.observe(wordmark);
 
   return () => {
     observer.disconnect();
-    if (playback) {
-      playback.complete();
-      finishReveal();
-    } else {
-      delete wordmark.dataset.reveal;
-    }
+    resetReveal();
+    delete wordmark.dataset.reveal;
   };
 }
 
@@ -217,7 +229,7 @@ function LandingMotion() {
       observeFooterWordmark(),
     ];
     return () => {
-      for (const cleanup of stop) cleanup?.();
+      for (const cleanup of stop) cleanup();
     };
   }, [animateChapter, reduced]);
 
