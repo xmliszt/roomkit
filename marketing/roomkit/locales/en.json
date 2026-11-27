@@ -79,7 +79,7 @@
   "close": "Close",
   "compareValue": "{snapshot}% snapshot, {render}% render",
   "setupIntro": "Requires an Apple silicon Mac, Git, {node}, and {pnpm}.",
-  "webProject": "Open {localhost}. Under {newProject}, enter room dimensions and select {create}.",
+  "webProject": "Open {localhost} and select the same language as this page in Roomkit. Under {newProject}, enter room dimensions and select {create}.",
   "photoToolsIntro": "Install {homebrew} and sign in to {claude} or {codex}. In {photoSettings}, set up {blender} and {rebuildPhotos}. MapAnything uses about 4.9 GB.",
   "startPhotos": "Choose {startFromPhotos}.",
   "connectIntro": "Install {tailscale} on both devices and sign in to the same tailnet. Install CLI integration in the standalone Mac app’s Settings. Enable {magicDns} and {httpsCertificates} in your tailnet’s DNS settings.",

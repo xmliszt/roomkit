@@ -1,8 +1,11 @@
 import { randomUUID } from "node:crypto";
+import type { AppLocale } from "@planner/shared/src/i18n/app-locale.ts";
 import { ProjectSchema } from "@planner/shared/src/project/project-schema.ts";
 import { createRectangularScene } from "@planner/shared/src/scene/create-rectangular-scene.ts";
+import namesByLocale from "./sample-room-names.json" with { type: "json" };
 
-export function createSampleProject() {
+export function createSampleProject(locale: AppLocale = "en") {
+  const names = namesByLocale[locale];
   const scene = createRectangularScene({
     widthM: 4.8,
     depthM: 4.2,
@@ -11,7 +14,7 @@ export function createSampleProject() {
 
   return ProjectSchema.parse({
     id: randomUUID(),
-    name: "Sample living room",
+    name: names.room,
     sample: true,
     revision: 0,
     scene: {
@@ -30,7 +33,7 @@ export function createSampleProject() {
       },
       items: [
         {
-          name: "Olive sofa",
+          name: names.sofa,
           id: "sofa",
           sizeM: { width: 2.19365, height: 0.869359, depth: 0.892743 },
           xM: -0.25,
@@ -38,7 +41,7 @@ export function createSampleProject() {
           rotationRad: 0,
         },
         {
-          name: "Reading chair",
+          name: names.chair,
           id: "chair",
           sizeM: { width: 0.786184, height: 0.829119, depth: 0.760905 },
           xM: -1.58,
@@ -46,7 +49,7 @@ export function createSampleProject() {
           rotationRad: 1.94,
         },
         {
-          name: "Oak coffee table",
+          name: names.table,
           id: "table",
           sizeM: { width: 1.22, height: 0.425, depth: 0.62 },
           xM: -0.18,
@@ -54,7 +57,7 @@ export function createSampleProject() {
           rotationRad: 0,
         },
         {
-          name: "Woven rug",
+          name: names.rug,
           id: "rug",
           sizeM: { width: 2.567936, height: 0.012, depth: 1.8 },
           xM: -0.3,
@@ -62,7 +65,7 @@ export function createSampleProject() {
           rotationRad: 0,
         },
         {
-          name: "Floor lamp",
+          name: names.lamp,
           id: "lamp",
           sizeM: { width: 0.4, height: 1.6, depth: 0.4 },
           xM: 1.37,

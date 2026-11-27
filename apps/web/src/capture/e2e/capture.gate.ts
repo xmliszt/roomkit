@@ -184,6 +184,21 @@ for (const weak of [false, true]) {
     ).photos;
     expect(after).toHaveLength(5);
     expect(after.every((entry) => entry.origin === "capture")).toBe(true);
+    if (weak) {
+      try {
+        await sendDaemonCommand({ type: "language.set", locale: "zh-Hans" });
+        await expect(
+          page.getByText("请为地面补拍一张照片，以便覆盖更多区域。"),
+        ).toBeVisible();
+        await expect(
+          page.getByText(
+            "房间使用模型估算的比例。请在房间面板中检查宽度、深度和天花板高度。",
+          ),
+        ).toBeVisible();
+      } finally {
+        await sendDaemonCommand({ type: "language.set", locale: "en" });
+      }
+    }
     await page.goto(`/projects/${project.id}/capture`);
     await expect(page.getByText("too blurry", { exact: true })).toBeVisible();
     await expect(thumbnails).toHaveCount(4);

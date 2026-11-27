@@ -2,6 +2,7 @@
 
 import type { Job } from "@planner/shared/src/jobs/job-schema.ts";
 import { useState } from "react";
+import { getReconstructionText } from "../chat/get-reconstruction-text.ts";
 import { formatDecimal } from "../i18n/format-decimal.ts";
 import { useLocale } from "../i18n/use-locale.ts";
 import { useMessages } from "../i18n/use-messages.ts";
@@ -134,7 +135,9 @@ export function JobRow(props: JobRowProps) {
               />
             )}
             <p role="alert" className="min-w-0 text-danger">
-              {job.error}
+              {job.kind === "reconstruction"
+                ? (getReconstructionText({ text: job.error, t }) ?? job.error)
+                : job.error}
             </p>
           </div>
         ) : (

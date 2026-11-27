@@ -461,8 +461,15 @@ export function createDaemon(options: {
         });
       case "project.create":
         return store.createProject({ name: command.name, room: command.room });
-      case "project.sample.open":
-        return store.openSampleProject(command.resetProjectId);
+      case "project.sample.open": {
+        const preference = language.get();
+        return store.openSampleProject({
+          resetProjectId: command.resetProjectId,
+          locale:
+            command.locale ??
+            (preference.kind === "selected" ? preference.locale : undefined),
+        });
+      }
       case "project.open":
         return store.openProject(command.projectId);
       case "project.rename":

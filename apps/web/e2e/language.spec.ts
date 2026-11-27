@@ -1,5 +1,6 @@
 import { rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { ChatMessageSchema } from "@planner/shared/src/chat/chat-message-schema.ts";
 import { ClientCommandSchema } from "@planner/shared/src/protocol/client-command-schema.ts";
 import { expect, test } from "@playwright/test";
 import { createProject } from "../../../e2e/create-project.ts";
@@ -165,6 +166,84 @@ test.describe("fresh install", () => {
       await page.screenshot({
         path: join(evidence, "settings-language-zh-hant-320.png"),
       });
+  });
+
+  test("reconstruction guidance follows the app language and keeps custom chat text", async ({
+    page,
+  }) => {
+    const project = await createProject({
+      name: "测试房间",
+      widthM: 4.8,
+      depthM: 3.4,
+      ceilingHeightM: 2.6,
+    });
+    try {
+      const root = process.env.PLANNER_E2E_HOME;
+      if (!root) throw new Error("PLANNER_E2E_HOME is required");
+      const message = ChatMessageSchema.parse({
+        id: "capture-fixture",
+        author: { kind: "agent", role: "surveyor" },
+        status: "done",
+        createdAt: new Date().toISOString(),
+        blocks: [
+          { kind: "job", jobId: "capture-fixture" },
+          {
+            kind: "capture-request",
+            wallId: "wall-1",
+            standM: { x: 0, z: 0 },
+            lookAtM: { x: -2.4, z: 0 },
+            text: "Photograph wall wall-1 near x -2.40, z 0.00 (inferred). Stand at the marked point and face the wall.",
+          },
+          {
+            kind: "text",
+            markdown:
+              "Scale sources differ by more than 5%: bench, main seat. Check these measurements.",
+          },
+          { kind: "text", markdown: "Custom note about the room." },
+        ],
+      });
+      await writeFile(
+        join(root, "projects", project.id, ".planner", "chat.json"),
+        JSON.stringify([message]),
+      );
+      await sendDaemonCommand({ type: "language.set", locale: "zh-Hans" });
+      await page.goto(`/projects/${project.id}`);
+      await page.getByRole("button", { name: "聊天", exact: true }).click();
+      await expect(
+        page.getByText("这面墙的位置是估算的。", { exact: false }),
+      ).toBeVisible();
+      await expect(
+        page.getByText(
+          "比例参考相差超过 5%（bench, main seat）。请检查这些实测尺寸。",
+        ),
+      ).toBeVisible();
+      await expect(page.getByText("Custom note about the room.")).toBeVisible();
+
+      await page.getByRole("tab", { name: "物体", exact: true }).click();
+      await expect(
+        page.getByRole("article", { name: "G 型双联插座", exact: true }),
+      ).toBeVisible();
+      await expect(
+        page.getByRole("article", {
+          name: "I 型（澳大利亚、中国）",
+          exact: true,
+        }),
+      ).toBeVisible();
+      await page.getByRole("tab", { name: "聊天", exact: true }).click();
+
+      await sendDaemonCommand({ type: "language.set", locale: "en" });
+      await expect(
+        page.getByText(
+          "Take another photo of wall 1. Its position was estimated.",
+        ),
+      ).toBeVisible();
+    } finally {
+      await sendDaemonCommand({ type: "language.set", locale: "en" });
+      await sendDaemonCommand({
+        type: "project.remove",
+        projectId: project.id,
+      });
+    }
   });
 
   test("the French sample tour localizes the exercise and setup link", async ({

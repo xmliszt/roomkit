@@ -79,7 +79,7 @@
   "close": "Schließen",
   "compareValue": "{snapshot} % Schnappschuss, {render} % Rendering",
   "setupIntro": "Du brauchst einen Mac mit Apple-Chip, Git, {node} und {pnpm}.",
-  "webProject": "Öffne {localhost}. Gib unter {newProject} die Raummaße ein und wähle {create}.",
+  "webProject": "Öffne {localhost} und wähle in Roomkit dieselbe Sprache wie auf dieser Seite. Gib unter {newProject} die Raummaße ein und wähle {create}.",
   "photoToolsIntro": "Installiere {homebrew} und melde dich bei {claude} oder {codex} an. Richte unter {photoSettings} die Optionen {blender} und {rebuildPhotos} ein. MapAnything benötigt etwa 4,9 GB.",
   "startPhotos": "Wähle {startFromPhotos}.",
   "connectIntro": "Installiere {tailscale} auf beiden Geräten und melde dich im selben Tailnet an. Installiere die CLI-Integration in den Einstellungen der eigenständigen Mac-App. Aktiviere {magicDns} und {httpsCertificates} in den DNS-Einstellungen deines Tailnets.",

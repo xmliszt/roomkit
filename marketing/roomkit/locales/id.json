@@ -79,7 +79,7 @@
   "close": "Tutup",
   "compareValue": "Cuplikan {snapshot}%, render {render}%",
   "setupIntro": "Anda memerlukan Mac dengan cip Apple, Git, {node}, dan {pnpm}.",
-  "webProject": "Buka {localhost}. Di {newProject}, masukkan ukuran ruangan dan pilih {create}.",
+  "webProject": "Buka {localhost} dan pilih bahasa yang sama dengan halaman ini di Roomkit. Di {newProject}, masukkan dimensi ruangan dan pilih {create}.",
   "photoToolsIntro": "Instal {homebrew} dan masuk ke {claude} atau {codex}. Di {photoSettings}, siapkan {blender} dan {rebuildPhotos}. MapAnything menggunakan sekitar 4,9 GB.",
   "startPhotos": "Pilih {startFromPhotos}.",
   "connectIntro": "Instal {tailscale} di kedua perangkat dan masuk ke tailnet yang sama. Instal integrasi baris perintah di pengaturan aplikasi Mac mandiri. Aktifkan {magicDns} dan {httpsCertificates} di pengaturan DNS tailnet Anda.",

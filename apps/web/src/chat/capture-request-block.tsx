@@ -10,13 +10,37 @@ import { uploadCapturePhoto } from "./upload-capture-photo.ts";
 type CaptureRequestBlockProps = {
   block: Extract<ChatBlock, { kind: "capture-request" }>;
   actions: ChatActions;
+  reconstruction: boolean;
 };
+
+function getCoverageReason(block: CaptureRequestBlockProps["block"]) {
+  if (
+    block.wallId === "floor" &&
+    block.text === "Photograph the floor from the marked point, looking down."
+  ) {
+    return "low-coverage";
+  }
+  const match =
+    /^Photograph wall ([\w-]+) near x -?\d+\.\d{2}, z -?\d+\.\d{2} \((inferred|low-coverage)\)\. Stand at the marked point and face the wall\.$/.exec(
+      block.text,
+    );
+  if (!match || match[1] !== block.wallId) return undefined;
+  const reason = match[2];
+  return reason === "inferred" || reason === "low-coverage"
+    ? reason
+    : undefined;
+}
 
 export function CaptureRequestBlock(props: CaptureRequestBlockProps) {
   const t = useMessages();
   const room = props.actions.scene.room;
   const map = getCaptureRequestMap({ room, block: props.block });
   const isFloor = props.block.wallId === "floor";
+  const wallNumber =
+    room.walls.findIndex((wall) => wall.id === props.block.wallId) + 1;
+  const coverageReason = props.reconstruction
+    ? getCoverageReason(props.block)
+    : undefined;
   const inputRef = useRef<HTMLInputElement>(null);
   const uploadingRef = useRef(false);
   const [status, setStatus] = useState<
@@ -65,7 +89,7 @@ export function CaptureRequestBlock(props: CaptureRequestBlockProps) {
                 "chat.capture-request-block.photo-position-looking-down-at-the-floor",
               )
             : t("chat.capture-request-block.photo-position-facing-wallid", {
-                wallId: props.block.wallId,
+                wallId: wallNumber || props.block.wallId,
               })
         }
         viewBox={map.viewBox}
@@ -135,7 +159,15 @@ export function CaptureRequestBlock(props: CaptureRequestBlockProps) {
         />
       </svg>
       <div className="flex min-w-0 flex-col gap-y-2">
-        <p>{props.block.text}</p>
+        <p>
+          {coverageReason === undefined
+            ? props.block.text
+            : isFloor
+              ? t("chat.reconstruction.photograph-floor")
+              : t(`chat.reconstruction.photograph-wall-${coverageReason}`, {
+                  wallId: wallNumber || props.block.wallId,
+                })}
+        </p>
         <p className="text-[11px] text-ink-dim">
           {isFloor
             ? t("chat.capture-request-block.stand-at-the-dot-look-down")

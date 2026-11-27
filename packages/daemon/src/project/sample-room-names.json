@@ -1,0 +1,146 @@
+{
+  "en": {
+    "room": "Sample living room",
+    "sofa": "Olive sofa",
+    "chair": "Reading chair",
+    "table": "Oak coffee table",
+    "rug": "Woven rug",
+    "lamp": "Floor lamp"
+  },
+  "de": {
+    "room": "Beispielwohnzimmer",
+    "sofa": "Olivgrünes Sofa",
+    "chair": "Lesesessel",
+    "table": "Couchtisch aus Eiche",
+    "rug": "Gewebter Teppich",
+    "lamp": "Stehlampe"
+  },
+  "es": {
+    "room": "Sala de estar de ejemplo",
+    "sofa": "Sofá verde oliva",
+    "chair": "Sillón de lectura",
+    "table": "Mesa de centro de roble",
+    "rug": "Alfombra tejida",
+    "lamp": "Lámpara de pie"
+  },
+  "fr": {
+    "room": "Salon d’exemple",
+    "sofa": "Canapé vert olive",
+    "chair": "Fauteuil de lecture",
+    "table": "Table basse en chêne",
+    "rug": "Tapis tissé",
+    "lamp": "Lampadaire"
+  },
+  "hi": {
+    "room": "नमूना बैठक",
+    "sofa": "ऑलिव हरा सोफ़ा",
+    "chair": "पढ़ने की कुर्सी",
+    "table": "ओक की कॉफ़ी टेबल",
+    "rug": "बुना हुआ गलीचा",
+    "lamp": "फ़्लोर लैंप"
+  },
+  "id": {
+    "room": "Contoh ruang tamu",
+    "sofa": "Sofa hijau zaitun",
+    "chair": "Kursi baca",
+    "table": "Meja kopi kayu ek",
+    "rug": "Karpet tenun",
+    "lamp": "Lampu lantai"
+  },
+  "it": {
+    "room": "Soggiorno di esempio",
+    "sofa": "Divano verde oliva",
+    "chair": "Poltrona da lettura",
+    "table": "Tavolino in rovere",
+    "rug": "Tappeto intrecciato",
+    "lamp": "Lampada da terra"
+  },
+  "ja": {
+    "room": "サンプルのリビングルーム",
+    "sofa": "オリーブ色のソファ",
+    "chair": "読書用チェア",
+    "table": "オーク材のローテーブル",
+    "rug": "織りラグ",
+    "lamp": "フロアランプ"
+  },
+  "ko": {
+    "room": "예시 거실",
+    "sofa": "올리브색 소파",
+    "chair": "독서용 의자",
+    "table": "오크 커피 테이블",
+    "rug": "직조 러그",
+    "lamp": "장스탠드"
+  },
+  "nl": {
+    "room": "Voorbeeldwoonkamer",
+    "sofa": "Olijfgroene bank",
+    "chair": "Leesstoel",
+    "table": "Eikenhouten salontafel",
+    "rug": "Geweven vloerkleed",
+    "lamp": "Vloerlamp"
+  },
+  "pl": {
+    "room": "Przykładowy salon",
+    "sofa": "Oliwkowa sofa",
+    "chair": "Fotel do czytania",
+    "table": "Dębowy stolik kawowy",
+    "rug": "Tkany dywan",
+    "lamp": "Lampa podłogowa"
+  },
+  "pt-BR": {
+    "room": "Sala de estar de exemplo",
+    "sofa": "Sofá verde-oliva",
+    "chair": "Poltrona de leitura",
+    "table": "Mesa de centro de carvalho",
+    "rug": "Tapete tecido",
+    "lamp": "Luminária de piso"
+  },
+  "ru": {
+    "room": "Пример гостиной",
+    "sofa": "Оливковый диван",
+    "chair": "Кресло для чтения",
+    "table": "Дубовый журнальный столик",
+    "rug": "Тканый ковёр",
+    "lamp": "Торшер"
+  },
+  "tr": {
+    "room": "Örnek oturma odası",
+    "sofa": "Zeytin yeşili kanepe",
+    "chair": "Okuma koltuğu",
+    "table": "Meşe orta sehpa",
+    "rug": "Dokuma halı",
+    "lamp": "Lambader"
+  },
+  "uk": {
+    "room": "Зразок вітальні",
+    "sofa": "Оливковий диван",
+    "chair": "Крісло для читання",
+    "table": "Дубовий журнальний столик",
+    "rug": "Тканий килим",
+    "lamp": "Торшер"
+  },
+  "vi": {
+    "room": "Phòng khách mẫu",
+    "sofa": "Sofa xanh ô liu",
+    "chair": "Ghế đọc sách",
+    "table": "Bàn trà gỗ sồi",
+    "rug": "Thảm dệt",
+    "lamp": "Đèn cây"
+  },
+  "zh-Hans": {
+    "room": "示例客厅",
+    "sofa": "橄榄绿沙发",
+    "chair": "阅读椅",
+    "table": "橡木茶几",
+    "rug": "编织地毯",
+    "lamp": "落地灯"
+  },
+  "zh-Hant": {
+    "room": "範例客廳",
+    "sofa": "橄欖綠沙發",
+    "chair": "閱讀椅",
+    "table": "橡木茶几",
+    "rug": "編織地毯",
+    "lamp": "落地燈"
+  }
+}

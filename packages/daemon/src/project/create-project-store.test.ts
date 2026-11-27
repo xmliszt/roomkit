@@ -509,6 +509,23 @@ test("a failed reconstruction save restores the pending autosave", () => {
   expect(reopened.reconstruction).toBeUndefined();
 });
 
+test("localizes a new sample room and preserves its saved names on reopen", () => {
+  const { store } = buildStore();
+  const sample = store.openSampleProject({ locale: "zh-Hans" });
+  expect(sample.name).toBe("示例客厅");
+  expect(sample.scene.items.map((item) => item.name)).toContain("落地灯");
+
+  store.renameProject({ projectId: sample.id, name: "我的客厅" });
+
+  expect(store.openSampleProject({ locale: "fr" }).name).toBe("我的客厅");
+  const reset = store.openSampleProject({
+    resetProjectId: sample.id,
+    locale: "fr",
+  });
+  expect(reset.name).toBe("Salon d’exemple");
+  expect(reset.scene.items.map((item) => item.name)).toContain("Lampadaire");
+});
+
 test.each([
   { action: "opening", reset: false },
   { action: "resetting", reset: true },
@@ -516,8 +533,10 @@ test.each([
   "$action the sample copies all five furniture bundles at native size",
   async ({ reset }) => {
     const { store } = buildStore();
-    const sample = store.openSampleProject(undefined);
-    const project = reset ? store.openSampleProject(sample.id) : sample;
+    const sample = store.openSampleProject();
+    const project = reset
+      ? store.openSampleProject({ resetProjectId: sample.id })
+      : sample;
     const vector = z.tuple([z.number(), z.number(), z.number()]);
     const gltfSchema = z.object({
       accessors: z.array(
@@ -616,14 +635,14 @@ test.each([
 test("a failed sample reset keeps the current sample available", () => {
   const write = vi.fn(writeJson);
   const { store, events } = buildStore({ writeJson: write });
-  const original = store.openSampleProject(undefined);
+  const original = store.openSampleProject();
   write.mockImplementationOnce(() => {
     throw new Error("Sample could not be written");
   });
 
-  expect(() => store.openSampleProject(original.id)).toThrow(
-    "Sample could not be written",
-  );
-  expect(store.openSampleProject(undefined).id).toBe(original.id);
+  expect(() =>
+    store.openSampleProject({ resetProjectId: original.id }),
+  ).toThrow("Sample could not be written");
+  expect(store.openSampleProject().id).toBe(original.id);
   expect(events.map((event) => event.kind)).toEqual(["project.created"]);
 });

@@ -79,7 +79,7 @@
   "close": "Fermer",
   "compareValue": "Capture à {snapshot} %, rendu à {render} %",
   "setupIntro": "Configuration requise : un Mac à puce Apple, Git, {node} et {pnpm}.",
-  "webProject": "Ouvrez {localhost}. Dans {newProject}, saisissez les dimensions de la pièce, puis sélectionnez {create}.",
+  "webProject": "Ouvrez {localhost} et choisissez dans Roomkit la même langue que sur cette page. Dans {newProject}, saisissez les dimensions de la pièce et sélectionnez {create}.",
   "photoToolsIntro": "Installez {homebrew} et connectez-vous à {claude} ou à {codex}. Dans {photoSettings}, configurez {blender} et {rebuildPhotos}. MapAnything utilise environ 4,9 Go.",
   "startPhotos": "Sélectionnez {startFromPhotos}.",
   "connectIntro": "Installez {tailscale} sur les deux appareils et connectez-les au même tailnet. Installez l’intégration en ligne de commande dans les réglages de l’application Mac autonome. Activez {magicDns} et les {httpsCertificates} dans les réglages DNS de votre tailnet.",

@@ -2,7 +2,7 @@ import { ProjectSchema } from "@planner/shared/src/project/project-schema.ts";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
-import { useMessages } from "../i18n/use-messages.ts";
+import { useAppLanguage } from "../i18n/use-app-language.ts";
 import { RowButton } from "../pages-ui/row-button.tsx";
 import { usePlannerSession } from "../planner/use-planner-session.ts";
 
@@ -12,7 +12,7 @@ type SampleRoomProps = {
 };
 
 export function SampleRoom(props: SampleRoomProps) {
-  const t = useMessages();
+  const { locale, t } = useAppLanguage();
   const titleId = useId();
   const router = useRouter();
   const session = usePlannerSession();
@@ -27,6 +27,7 @@ export function SampleRoom(props: SampleRoomProps) {
       const ack = await session.command({
         type: "project.sample.open",
         resetProjectId,
+        locale,
       });
       if (!ack.ok) throw new Error(ack.error);
       router.push(`/projects/${ProjectSchema.parse(ack.result).id}`);

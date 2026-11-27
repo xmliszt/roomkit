@@ -18,7 +18,7 @@ Open [the English page](http://127.0.0.1:8080/) or [the Simplified Chinese page]
 2. Add the tag and its native language name to `marketing/roomkit/locales/published.json` in your local worktree. Build and preview the page at `/<tag>/`. The build requires a complete copy file for every listed locale. It generates the language links, canonical URLs, alternates and sitemap from that list.
 3. Review the page with JavaScript enabled and disabled. Keep workflow labels short enough to fit on one line at 320 px. Check keyboard language switching from an anchored section, command copying and title and description language. Keep draft locales out of the published list until the copy has been approved.
 
-The template owns the section IDs and shell examples. Keep these in the template so every language exposes the same anchors and copies the same commands. The setup instructions show the app’s English control names so readers can find them in the app.
+The template owns the section IDs and shell examples. Keep these in the template so every language exposes the same anchors and copies the same commands. Setup instructions use the control names from the app catalog for the page’s language.
 
 Run `pnpm check` and `pnpm exec playwright test -c apps/web/playwright.config.ts --no-deps roomkit-landing.spec.ts` before handing off changes.
 

@@ -79,7 +79,7 @@
   "close": "閉じる",
   "compareValue": "スナップショット {snapshot}%、レンダー {render}%",
   "setupIntro": "Appleシリコン搭載Mac、Git、{node}、{pnpm}が必要です。",
-  "webProject": "{localhost}を開きます。{newProject}で部屋の寸法を入力し、{create}を選びます。",
+  "webProject": "{localhost} を開き、Roomkit でこのページと同じ言語を選びます。{newProject} で部屋の寸法を入力し、{create} を選びます。",
   "photoToolsIntro": "{homebrew}をインストールし、{claude}または{codex}にログインします。{photoSettings}で{blender}と{rebuildPhotos}を設定します。MapAnythingは約4.9 GBを使用します。",
   "startPhotos": "{startFromPhotos}を選びます。",
   "connectIntro": "両方の端末に{tailscale}をインストールし、同じtailnetにログインします。Macのスタンドアロン版アプリの設定でCLI連携をインストールし、tailnetのDNS設定で{magicDns}と{httpsCertificates}を有効にします。",

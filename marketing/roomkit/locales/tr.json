@@ -79,7 +79,7 @@
   "close": "Kapat",
   "compareValue": "Anlık görüntü %{snapshot}, render %{render}",
   "setupIntro": "Apple çipli bir Mac, Git, {node} ve {pnpm} gerekir.",
-  "webProject": "{localhost} adresini açın. {newProject} bölümüne oda ölçülerini girip {create} seçeneğini seçin.",
+  "webProject": "{localhost} adresini açın ve Roomkit’te bu sayfayla aynı dili seçin. {newProject} bölümünde oda boyutlarını girin ve {create} seçeneğini seçin.",
   "photoToolsIntro": "{homebrew} yükleyin ve {claude} veya {codex} hesabınızla giriş yapın. {photoSettings} bölümünde {blender} ve {rebuildPhotos} seçeneklerini kurun. MapAnything yaklaşık 4,9 GB yer kullanır.",
   "startPhotos": "{startFromPhotos} seçeneğini seçin.",
   "connectIntro": "İki cihaza da {tailscale} yükleyin ve aynı tailnet’e giriş yapın. Bağımsız Mac uygulamasının ayarlarından komut satırı entegrasyonunu kurun. Tailnet’in DNS ayarlarında {magicDns} ve {httpsCertificates} seçeneklerini etkinleştirin.",

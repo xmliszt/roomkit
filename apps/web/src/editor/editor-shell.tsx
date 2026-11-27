@@ -1352,7 +1352,7 @@ function EditorShellBody(props: EditorShellProps) {
         type: "item.add",
         item: {
           id: itemId,
-          name: chargingPort.name,
+          name: t("editor.charging-port.name"),
           model: { kind: "asset", assetId: chargingPort.assetId },
           placement,
           sizeM: chargingPort.sizeM,

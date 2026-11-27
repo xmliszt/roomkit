@@ -235,6 +235,7 @@ export const ClientCommandSchema = z
         type: z.literal("project.sample.open"),
         requestId,
         resetProjectId: ProjectIdSchema.optional(),
+        locale: AppLocaleSchema.optional(),
       })
       .strict(),
     z

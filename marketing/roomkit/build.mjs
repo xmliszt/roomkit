@@ -5,12 +5,30 @@ import { parseRelease } from "./release-source.mjs";
 
 const source = import.meta.dirname;
 const output = join(source, "dist");
+const appMessagesDir = join(source, "../../apps/web/src/i18n/messages");
 const origin = "https://www.roomkit.space";
 const fragments = /\{(\w+)\}/g;
 
 async function readLocaleFile(name) {
   return JSON.parse(
     await readFile(join(source, "locales", `${name}.json`), "utf8"),
+  );
+}
+
+function appLocaleFilename(options) {
+  const locale = new Intl.Locale(options.locale);
+  const fallback =
+    locale.language === "zh"
+      ? locale.maximize().script === "Hant"
+        ? "zh-Hant"
+        : "zh-Hans"
+      : locale.language === "pt"
+        ? "pt-BR"
+        : locale.language;
+  return (
+    [locale.baseName, fallback]
+      .map((name) => `${name}.json`)
+      .find((filename) => options.files.has(filename)) ?? "en.json"
   );
 }
 
@@ -26,28 +44,28 @@ function escapeHtml(value) {
     .replaceAll('"', "&quot;");
 }
 
-function renderInlineCopy(copy) {
+function renderInlineCopy({ copy, app }) {
+  const label = (key) => `<strong>${escapeHtml(app[key])}</strong>`;
+  const settingsPath = (key) => `${label("settings.title")} → ${label(key)}`;
   const markup = {
     node: '<a href="https://nodejs.org/">Node.js 24+</a>',
     pnpm: '<a href="https://pnpm.io/installation">pnpm 10.34.9</a>',
     localhost: '<a href="http://localhost:3210">localhost:3210</a>',
-    newProject: '<strong lang="en">New project</strong>',
-    create: '<strong lang="en">create</strong>',
+    newProject: label("projects.newProject"),
+    create: label("projects.create"),
     homebrew: '<a href="https://brew.sh/">Homebrew</a>',
     claude: '<a href="https://code.claude.com/docs/en/setup">Claude Code</a>',
     codex: '<a href="https://developers.openai.com/codex/cli/">Codex</a>',
-    photoSettings:
-      '<strong lang="en">Settings → Set up AI and photo tools</strong>',
+    photoSettings: settingsPath("setup.title"),
     blender: "<strong>Blender</strong>",
-    rebuildPhotos: '<strong lang="en">Rebuild rooms from photos</strong>',
-    startFromPhotos: '<strong lang="en">Start from photos</strong>',
+    rebuildPhotos: label("setup.rebuildRooms"),
+    startFromPhotos: label("projects.startFromPhotos"),
     tailscale: '<a href="https://tailscale.com/download">Tailscale</a>',
     magicDns:
       '<a href="https://tailscale.com/docs/features/magicdns">MagicDNS</a>',
     httpsCertificates: `<a href="https://tailscale.com/docs/how-to/set-up-https-certificates">${escapeHtml(copy.httpsCertificates)}</a>`,
-    remoteSettings:
-      '<strong lang="en">Settings → Remote access with Tailscale</strong>',
-    checkAgain: '<strong lang="en">Check again</strong>',
+    remoteSettings: settingsPath("tailnet.title"),
+    checkAgain: label("tailnet.checkAgain"),
   };
 
   return Object.fromEntries(
@@ -84,15 +102,24 @@ function validateCopy({ locale, copy, english }) {
   }
 }
 
-const [layout, installFigure, published, english, releaseFile, appcast] =
-  await Promise.all([
-    readFile(join(source, "index.html"), "utf8"),
-    readFile(join(source, "install-dmg.svg"), "utf8"),
-    readLocaleFile("published"),
-    readLocaleFile("en"),
-    readFile(join(source, "macos-release.json"), "utf8"),
-    readFile(join(source, "appcast.xml")),
-  ]);
+const [
+  layout,
+  installFigure,
+  published,
+  english,
+  releaseFile,
+  appcast,
+  appLocales,
+] = await Promise.all([
+  readFile(join(source, "index.html"), "utf8"),
+  readFile(join(source, "install-dmg.svg"), "utf8"),
+  readLocaleFile("published"),
+  readLocaleFile("en"),
+  readFile(join(source, "macos-release.json"), "utf8"),
+  readFile(join(source, "appcast.xml")),
+  readdir(appMessagesDir),
+]);
+const appLocaleFiles = new Set(appLocales);
 const [beforeFigure, afterFigure, ...extraFigures] = layout.split(
   "{{macInstallFigure}}",
 );
@@ -126,7 +153,16 @@ const alternates = [...locales, { locale: "x-default", path: localePath("en") }]
 
 const pages = await Promise.all(
   locales.map(async ({ locale, path }) => {
-    const copy = locale === "en" ? english : await readLocaleFile(locale);
+    const [copy, app] = await Promise.all([
+      locale === "en" ? english : readLocaleFile(locale),
+      readFile(
+        join(
+          appMessagesDir,
+          appLocaleFilename({ locale, files: appLocaleFiles }),
+        ),
+        "utf8",
+      ).then(JSON.parse),
+    ]);
     validateCopy({ locale, copy, english });
     const canonical = origin + path;
     const socialImage = new URL("/assets/roomkit-social.png", origin).href;
@@ -147,7 +183,7 @@ const pages = await Promise.all(
       image: socialImage,
     }).replaceAll("<", "\\u003c");
     const values = {
-      ...renderInlineCopy(copy),
+      ...renderInlineCopy({ copy, app }),
       macDmgUrl: hostedRelease
         ? "/downloads/Roomkit.dmg"
         : escapeHtml(macRelease.dmg),
