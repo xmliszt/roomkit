@@ -1,5 +1,5 @@
 import { accessSync, constants } from "node:fs";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { homedir, tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { exec } from "../util/exec.ts";
@@ -31,13 +31,17 @@ export async function openAgentLogin(options: {
     throw new Error("Install the agent before signing in.");
   }
 
-  const folder = await mkdtemp(join(tmpdir(), "roomkit-login-"));
-  const file = join(folder, "Sign in to Roomkit.command");
   const authVariable = isClaude ? "CLAUDE_CONFIG_DIR" : "CODEX_HOME";
   const authFolder = resolve(
     options.env[authVariable] ||
       join(options.env.HOME ?? homedir(), isClaude ? ".claude" : ".codex"),
   );
+  await mkdir(authFolder, { recursive: true, mode: 0o700 });
+
+  const folder = await mkdtemp(join(tmpdir(), "roomkit-login-"));
+  const file = join(folder, "Sign in to Roomkit.command");
+  const authAssignment = `${authVariable}=${quoteShellArgument(authFolder)}`;
+  const loginCommand = `${quoteShellArgument(executable)} ${isClaude ? "auth login" : "login"}`;
   try {
     await writeFile(
       file,
@@ -45,8 +49,8 @@ export async function openAgentLogin(options: {
         "#!/bin/sh",
         'rm -f -- "$0"',
         `rmdir -- "\${0%/*}"`,
-        `export ${authVariable}=${quoteShellArgument(authFolder)}`,
-        `exec ${quoteShellArgument(executable)} ${isClaude ? "auth login" : "login"}`,
+        `export ${authAssignment}`,
+        `exec ${loginCommand}`,
         "",
       ].join("\n"),
       { mode: 0o700, flag: "wx" },
@@ -58,7 +62,7 @@ export async function openAgentLogin(options: {
     });
     if (result.code !== 0 || result.timedOut)
       throw new Error(
-        "Could not open Terminal. Run the sign-in command on this Mac.",
+        `Could not open Terminal. Run ${authAssignment} ${loginCommand} on this Mac.`,
       );
   } catch (error) {
     await rm(folder, { recursive: true, force: true });

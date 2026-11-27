@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Fix Codex sign-in when its configuration folder has yet to be created.
+- Sign in to Codex or Claude Code directly from Settings → Agents.
+
 ## 0.1.0
 
 - Design a room from its dimensions or reconstruct it from photos. Adjust the layout, materials and lighting in the 3D editor.
