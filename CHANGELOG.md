@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+## 0.1.1
+
+- Correct translations across all 18 supported languages, including room reconstruction guidance, editor controls, and setup instructions.
 - Fix Codex sign-in when its configuration folder has yet to be created.
 - Sign in to Codex or Claude Code directly from Settings → Agents.
 
